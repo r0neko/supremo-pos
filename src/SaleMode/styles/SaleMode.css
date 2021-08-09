@@ -1,0 +1,25 @@
+.pos-top-bar {
+    height: 45px;
+    background-color: #262626;
+    color: white;
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+}
+
+.pos-top-bar .pos-logo img {
+    height: 25px;
+    width: auto;
+}
+
+.pos-top-bar .pos-title {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pos-sale-container {
+    background-color: #F2F2F2;
+    width: 100%;
+    height: 100%;
+}

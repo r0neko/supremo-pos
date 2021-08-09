@@ -1,0 +1,47 @@
+.pos-button {
+    border: none;
+    color: white;
+    background-color: #00B0F0;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 17px;
+    border-radius: 3px;
+
+    transition: background-color 0.15s;
+}
+
+.pos-button:disabled {
+    background-color: #979797 !important;
+    cursor: not-allowed;
+}
+
+.pos-button:hover {
+    background-color: #37c0f1;
+    cursor: pointer;
+}
+
+.pos-button:active {
+    background-color: #0378a3;
+}
+
+.pos-button.pos-success {
+    background-color:#1aad01;
+    color: white;
+}
+
+.pos-button.pos-success:hover {
+    background-color: #21cc03;
+    color: white;
+}
+
+.pos-button.pos-success:active {
+    background-color: #1cb800;
+    color: white;
+}
+
+.pos-float-right {
+    margin-right: 0;
+    margin-left: auto;
+}
