@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./style.css";
-import BuildInfo from "../Versioning";
+import BuildInfo from "../BuildInfo";
 
 class DebugBuild extends Component {
     render() {

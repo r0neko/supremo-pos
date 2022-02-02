@@ -40,6 +40,10 @@
     cursor: pointer;
 }
 
+.pos-keypad-button.active {
+    background-color: #0378a3;
+}
+
 .pos-keypad-button:active {
     background-color: #0378a3;
 }

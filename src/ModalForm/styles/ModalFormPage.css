@@ -6,6 +6,20 @@
     color: black;
 }
 
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 999999;
+
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
 .modal-page.dark {
     background-color: black;
     color: white;
@@ -27,7 +41,6 @@
 .modal-container.stylized {
     background-color: #00000000;
     color: white;
-    /* border-radius: 10px; */
 }
 
 .login-container {
@@ -92,6 +105,8 @@
 }
 
 .modal-container .pos-content {
+    min-width: 300px;
+    min-height: 50px;
     padding: 10px;
 }
 

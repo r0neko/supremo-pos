@@ -5,7 +5,7 @@ import Logo from "../Assets/SPOSLogo.png";
 
 class Modal extends Component {
     render() {
-        return <div className="modal-page dark">
+        return <div className="modal-overlay">
             <div className="centered-container">
                 <div className="modal-container stylized center">
                     <div className="pos-modal-header">
