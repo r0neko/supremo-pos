@@ -5,11 +5,14 @@
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
-    display: block;
     font-size: 17px;
-    border-radius: 3px;
+    /* border-radius: 3px; */
 
     transition: background-color 0.15s;
+}
+
+.pos-button.pos-button-block {
+    display: block;
 }
 
 .pos-button:disabled {
@@ -41,7 +44,17 @@
     color: white;
 }
 
-.pos-float-right {
-    margin-right: 0;
-    margin-left: auto;
+.pos-button.pos-error {
+    background-color: #FF0000;
+    color: white;
+}
+
+.pos-button.pos-error:hover {
+    background-color: #fc2d2d;
+    color: white;
+}
+
+.pos-button.pos-error:active {
+    background-color: #bd0404;
+    color: white;
 }

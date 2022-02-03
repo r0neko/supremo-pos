@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Modal from "./ModalForm/Modal"
+import Button from "./Button/Button";
 
 let queue = [];
 
@@ -21,6 +22,12 @@ class PopupManager extends Component {
         return e;
     }
 
+    static SetContent(handle, c) {
+        let e = queue.find((e, i) => i == handle);
+        if (e) e.content = c;
+        addCallback(e);
+    }
+
     static ClosePopup(id) {
         queue.splice(id, 1);
         if (queue.length > 0)
@@ -38,10 +45,12 @@ class PopupManager extends Component {
         if (this.state.currentPopup != null) {
             let popup = this.state.currentPopup;
 
-            let buttons = popup.buttons.map(e => <button className="btn btn-primary" onClick={() => {
-                if (e.callback) e.callback();
-                addCallback(queue.shift());
-            }}>{e.name}</button>);
+            let buttons = <div className="pos-float-right" style={{ "width": "fit-content" }}>
+                {popup.buttons.map(e => <Button onClick={() => {
+                    if (e.callback) e.callback();
+                    addCallback(queue.shift());
+                }}>{e.name}</Button>)}
+            </div>;
 
             return <Modal title={popup.title} footer={buttons}>
                 {popup.content}

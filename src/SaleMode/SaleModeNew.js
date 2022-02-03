@@ -8,6 +8,9 @@ import "../styles/design.css"
 import PopupManager from "../PopupManager";
 
 import API from "../API"
+import ButtonDanger from "../Button/ButtonDanger";
+import Router from "../Router";
+import MenuPage from "../Menu/MenuPage";
 
 function validate_plu(input) {
     if (input.length == 1)
@@ -73,7 +76,7 @@ class SaleMode extends Component {
     }
 
     onKeyDown(key) {
-        if(this.isSearching) {
+        if (this.isSearching) {
             if (document.activeElement == this.plu_txt.current) {
                 this.plu_txt.current.value = "";
             }
@@ -82,7 +85,7 @@ class SaleMode extends Component {
     }
 
     onKey(key) {
-        if(this.isSearching) {
+        if (this.isSearching) {
             if (document.activeElement == this.plu_txt.current) {
                 this.plu_txt.current.value = "";
             }
@@ -115,7 +118,7 @@ class SaleMode extends Component {
         console.log(plu)
         console.log("PLU: " + plu);
 
-        if(this.isSearching) return;
+        if (this.isSearching) return;
 
         let wait_popup = PopupManager.ShowPopup("Please wait!", `Searching for PLU '${plu}'...`);
 
@@ -168,8 +171,10 @@ class SaleMode extends Component {
                     </div>
                 </div>
                 <ExtendedTouchKeypad />
-            </div>
+                <br />
+                <ButtonDanger onClick={() => Router.RenderComponent(<MenuPage />)}>Meniu Principal</ButtonDanger>
         </div>
+        </div >
     }
 }
 

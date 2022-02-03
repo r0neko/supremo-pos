@@ -14,7 +14,7 @@
     width: 100%;
     height: 100%;
 
-    z-index: 999999;
+    z-index: 99999;
 
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
@@ -30,8 +30,6 @@
     color: black;
     width: 500px;
     height: auto;
-
-    /* padding: 5px; */
 }
 
 .modal-page .modal-container h1, .modal-page .modal-container h2, .modal-page .modal-container h3, .modal-page .modal-container h4, .modal-page .modal-container h5 {
@@ -45,7 +43,6 @@
 
 .login-container {
     background-color: #9DC3E6;
-    /* height: 250px; */
     padding: 10px;
     border-radius: 5px;
 
@@ -124,4 +121,21 @@
 .modal-container.stylized .pos-footer {
     border-radius: 0 0 7px 7px;
     padding: 10px;
+}
+
+.modal-container.stylized.flat .pos-footer, .modal-container.stylized.flat .pos-modal-header {
+    border-radius: 0 0 0 0;
+}
+
+.pos-footer .pos-button {
+    margin-right: 10px;
+}
+
+.pos-footer .pos-button:last-child {
+    margin-right: 0;
+}
+
+.pos-float-right {
+    margin-right: 0;
+    margin-left: auto;
 }

@@ -6,7 +6,7 @@ class DebugBuild extends Component {
     render() {
         return <div className="debug">
             SupremoPOS 2<br/>
-            For evaluation purposes. {BuildInfo.IsProduction() ? "Production Build" : "Development Build"} v{BuildInfo.BuildString}
+            For evaluation purposes. Build v{BuildInfo.BuildString}
         </div>
     }
 }

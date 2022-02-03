@@ -3,11 +3,11 @@ import "./styles/ModalFormPage.css";
 import "./styles/IconCircle.css";
 import Logo from "../Assets/SPOSLogo.png";
 
-class Modal extends Component {
+class ModalPage extends Component {
     render() {
-        return <div className="modal-overlay">
+        return <div className="modal-page dark">
             <div className="centered-container">
-                <div className="modal-container center stylized flat">
+                <div className="modal-container stylized center">
                     <div className="pos-modal-header">
                         <div className="pos-logo">
                             <img src={Logo}></img>
@@ -28,4 +28,4 @@ class Modal extends Component {
     }
 }
 
-export default Modal; 
+export default ModalPage; 
