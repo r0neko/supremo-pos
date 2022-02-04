@@ -1,15 +1,15 @@
+import API from "./API";
+
 class Session {
-    constructor(user) {
+    constructor(user, token) {
         this.user = user;
-        this.sessionId = null;
-        this.token = null;
-        this.tokenExpiration = null;
+        this.token = token;
 
         this.ping_handle = null;
     }
 
     destroy() {
-
+        return API.DestroySession();
     }
 }
 

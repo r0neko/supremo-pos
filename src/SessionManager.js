@@ -2,6 +2,8 @@ import PopupManager from "./PopupManager";
 import Router from "./Router";
 import Session from "./Session";
 
+import API from "./API";
+
 import MenuPage from "./Menu/MenuPage";
 
 let session = null;
@@ -33,26 +35,34 @@ function DestroyCurrent() {
 
 function SetCurrent(s) {
     session = s;
-    call("SessionCreated", [session]);
 }
 
 function GetCurrentSession() {
     return session;
 }
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function Authenticate(user, password) {
-    await delay(500); // simulate network delay
+    try {
+        let r = await API.AuthenticateUser(user, password);
 
-    SetCurrent(new Session({
-        name: user,
-        id: 1
-    }));
+        console.log(r);
 
-    return 0; // success
+        if (r.success) {
+            let t = new Session(null, r.token)
+
+            SetCurrent(t);
+
+            t.user = await API.Me();
+            call("SessionCreated", [t]);
+
+            return 0; // success
+        }
+
+        return r.error.code;
+    } catch (e) {
+        console.log(e);
+        return -2; // unknown error
+    }
 }
 
 // init the session manager callbacks

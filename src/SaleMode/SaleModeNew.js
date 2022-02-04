@@ -134,9 +134,14 @@ class SaleMode extends Component {
             PopupManager.ClosePopup(wait_popup);
 
             if (!r.success) {
-                PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu a putut fi identificat!`, [], 1);
+                PopupManager.ShowPopup("Eroare", `O eroare neașteptată a avut loc la procesarea codului PLU!`, [], 1);
             } else {
-                this.total_txt.current.value = `${r.price} LEI`;
+                if(r.product) {
+                    this.price_txt.current.value = `${r.product.price} LEI`;
+                    this.desc_txt.current.value = r.product.description;
+                } else {
+                    PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu există!`, [], 1);
+                }
             }
         }).catch(e => {
             this.isSearching = false;

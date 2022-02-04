@@ -71,6 +71,8 @@ class AuthPage extends Component {
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal-ul dvs. a fost blocat!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A03</p>, buttons, 1);
             else if (status == -1) // server is not reachable
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nu s-a putut contacta server-ul!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A00</p>, buttons, 1);
+            else if (status == -2) // server error
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>O eroare neașteptată a avut loc în timpul autentificării!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A04</p>, buttons, 1);
         });
     }
 
