@@ -2,6 +2,11 @@ import { Component } from "react";
 import Modal from "./ModalForm/Modal"
 import Button from "./Button/Button";
 
+import SoundManager from "./SoundManager";
+
+import Error from "./Assets/sounds/error.wav";
+import Info from "./Assets/sounds/info.wav";
+
 let queue = [];
 
 let addCallback = (callback) => { };
@@ -15,8 +20,12 @@ class PopupManager extends Component {
         }
     }
 
-    static ShowPopup(title, content, buttons = []) {
-        let e = queue.push({ title, content, buttons }) - 1;
+    static ShowPopup(title, content, buttons = [], alert = 0) {
+        if(alert >= 1 && buttons.length == 0) {
+            buttons = [{ name: "OK" }];
+        }
+
+        let e = queue.push({ title, content, buttons, alert }) - 1;
         if (e == 0)
             addCallback(queue.shift());
         return e;
@@ -43,13 +52,24 @@ class PopupManager extends Component {
 
     render() {
         if (this.state.currentPopup != null) {
+            switch(this.state.currentPopup.alert) {
+                case 0: break;
+                default:
+                case 1:
+                    SoundManager.Play(Error);
+                    break;
+                case 2:
+                    SoundManager.Play(Info);
+                    break;
+            }
+
             let popup = this.state.currentPopup;
 
             let buttons = <div className="pos-float-right" style={{ "width": "fit-content" }}>
-                {popup.buttons.map(e => <Button onClick={() => {
+                {popup.buttons.map((e, i) => <Button onClick={() => {
                     if (e.callback) e.callback();
                     addCallback(queue.shift());
-                }}>{e.name}</Button>)}
+                }} key={i}>{e.name}</Button>)}
             </div>;
 
             return <Modal title={popup.title} footer={buttons}>

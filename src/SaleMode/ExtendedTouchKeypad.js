@@ -9,7 +9,7 @@ class ExtendedTouchKeypad extends TouchKeypad {
         return [
             [1, 2, 3, "*"],
             [4, 5, 6, "PLU"],
-            [7, 8, 9, "ClientCard"],
+            [7, 8, 9, "CliCard"],
             [",", "0", "C<"]
         ];
     }

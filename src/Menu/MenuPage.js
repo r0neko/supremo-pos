@@ -23,11 +23,11 @@ class MenuPage extends Component {
     placeholder() {
         PopupManager.ShowPopup("Informație", <p>Funcția nu a fost implementată! Încercăm să implementăm funcția cât mai curând!</p>, [
             { name: "OK" }
-        ]);
+        ], 1);
     }
 
     disconnect() {
-        PopupManager.ShowPopup("Informație", <p>Esti sigur ca doresti sa te deconectezi?</p>, [
+        PopupManager.ShowPopup("Informație", <p>Ești sigur că doresti să te deconectezi?</p>, [
             {
                 name: "Da", callback: () => {
                     SessionManager.DestroyCurrent();
@@ -35,17 +35,17 @@ class MenuPage extends Component {
                 }
             },
             { name: "Nu" }
-        ]);
+        ], 2);
     }
 
     exit() {
         if(true) {
-            return PopupManager.ShowPopup("Informație", <p>SupremoPOS nu ruleaza sub aplicatia nativa.</p>, [
+            return PopupManager.ShowPopup("Informație", <p>SupremoPOS nu rulează sub aplicația nativă.</p>, [
                 { name: "OK" }
-            ]);
+            ], 1);
         }
 
-        PopupManager.ShowPopup("Informație", <p>Esti sigur ca doresti sa iesi din SupremoPOS?</p>, [
+        PopupManager.ShowPopup("Informație", <p>Esti sigur că dorești să ieși din SupremoPOS?</p>, [
             {
                 name: "Da", callback: () => {
                     SessionManager.DestroyCurrent();
@@ -53,7 +53,7 @@ class MenuPage extends Component {
                 }
             },
             { name: "Nu" }
-        ]);
+        ], 2);
     }
 
     render() {

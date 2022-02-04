@@ -38,8 +38,14 @@ class TouchKeypad extends Component {
 
     componentDidMount() {
         InputManager.Enable();
-        InputManager.AddHandler("down", this.onKeyDown.bind(this));
-        InputManager.AddHandler("up", this.onKeyUp.bind(this));
+
+        this.hd_down = InputManager.AddHandler("down", this.onKeyDown.bind(this));
+        this.hd_up = InputManager.AddHandler("up", this.onKeyUp.bind(this));
+    }
+
+    componentWillUnmount() {
+        InputManager.RemoveHandler("up", this.hd_up);
+        InputManager.RemoveHandler("down", this.hd_down);
     }
 
     buttonCallback(key) {
@@ -49,7 +55,7 @@ class TouchKeypad extends Component {
     }
 
     renderButton(id, name = id, end = false, doubleLong = false, active = true) {
-        return <button className={"pos-keypad-button" + (end ? " end" : "") + (doubleLong ? " double-long" : "") + (active ? " active" : "")} onClick={this.buttonCallback.bind(this, id)}>{name}</button>;
+        return <button key={id} className={"pos-keypad-button" + (end ? " end" : "") + (doubleLong ? " double-long" : "") + (active ? " active" : "")} onClick={this.buttonCallback.bind(this, id)}>{name}</button>;
     }
 
     genKeys() {

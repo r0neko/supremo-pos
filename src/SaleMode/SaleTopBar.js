@@ -3,6 +3,7 @@ import {
 } from "react"
 import "./styles/SaleMode.css"
 import Logo from "../Assets/SPOSLogo.png";
+import SessionManager from "../SessionManager";
 
 class SaleTopBar extends Component {
     constructor(props) {
@@ -33,10 +34,10 @@ class SaleTopBar extends Component {
                     <img src={Logo} alt="SPOS Logo"></img>
                 </div>
                 <div className="pos-title">
-                    Selling Mode – {this.state.currentDate}
+                    Mod Vânzare – {this.state.currentDate}
                 </div>
                 <div className="pos-account">
-                    Administrator
+                    {SessionManager.GetCurrentSession().user.name}
                 </div>
             </div>
     }

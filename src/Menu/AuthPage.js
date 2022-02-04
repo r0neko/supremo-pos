@@ -28,7 +28,7 @@ class AuthPage extends Component {
     componentDidMount() {
         InputManager.Enable();
         
-        InputManager.AddHandler("down", this.onKey.bind(this));
+        this.hd_down = InputManager.AddHandler("down", this.onKey.bind(this));
 
         document.focus = this.onFocusChange.bind(this);
 
@@ -39,6 +39,7 @@ class AuthPage extends Component {
     }
 
     componentWillUnmount() {
+        InputManager.RemoveHandler("down", this.hd_down);
         InputManager.Disable();
     }
 
@@ -63,19 +64,17 @@ class AuthPage extends Component {
             ]
 
             if (status == 1) // incorrect user/pass
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nume de utilizator/parola incorecte!</p>, buttons);
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nume de utilizator/parola incorecte!</p>, buttons, 1);
             else if (status == 2) // not associated with the server
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal ne-alocat pentru acest serviciu!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A01</p>, buttons);
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal ne-alocat pentru acest serviciu!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A01</p>, buttons, 1);
             else if (status == 3) // device banned
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal-ul dvs. a fost blocat!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A03</p>, buttons);
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal-ul dvs. a fost blocat!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A03</p>, buttons, 1);
             else if (status == -1) // server is not reachable
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nu s-a putut contacta server-ul!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A00</p>, buttons);
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nu s-a putut contacta server-ul!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A00</p>, buttons, 1);
         });
     }
 
     onFocusChange(e) {
-        console.log("focus change")
-        console.log(e);
         this.setState({ canScan: document.activeElement != this.ref.user.current && document.activeElement != this.ref.pass.current });
     }
 
@@ -119,7 +118,7 @@ class AuthPage extends Component {
             </ModalPage>
         }
 
-        return <ModalPage title="Autentificare" footer={<div className="pos-float-right" style={{ "width": "fit-content" }}><Button>Autentificare</Button></div>}>
+        return <ModalPage title="Autentificare" footer={<div className="pos-float-right" style={{ "width": "fit-content" }}><Button onClick={() => this.authByUser(this.ref.user.current.value, this.ref.pass.current.value)}>Autentificare</Button></div>}>
             Vă rugăm să vă autentificați pentru a începe sesiunea!
             <br />
             <div className="mb-3 mt-3">
@@ -127,7 +126,7 @@ class AuthPage extends Component {
                 <input type="text" class="form-control" ref={this.ref.user}/>
             </div>
             <div className="mb-3">
-                <label class="form-label">Parola:</label>
+                <label class="form-label">Parolă:</label>
                 <input type="password" class="form-control" ref={this.ref.pass}/>
             </div>
             {this.state.canScan ? <small>- sau puteți folosi scanner-ul pentru autentificare instantă -</small> : ""}

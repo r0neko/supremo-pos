@@ -18,7 +18,6 @@ function KeyDownHandler(event) {
     if (event.defaultPrevented)
         return;
 
-    Logger.Info("InputManager KeyDown", event.code)
     CallHandler("down", event);
 }
 
@@ -28,20 +27,21 @@ function KeyUpHandler(event) {
     if (event.defaultPrevented)
         return;
 
-    Logger.Info("InputManager KeyUp", event.code)
     CallHandler("up", event);
 }
 
 function DispatchKeyEvent(keyCode) {
-    console.log(keyCode);
-    console.log(GetKey(keyCode));
     window.dispatchEvent(
         new KeyboardEvent('keyup', GetKey(keyCode))
     );
 }
 
 function AddHandler(what, callback) {
-    callbacks[what].push(callback);
+    return callbacks[what].push(callback) - 1;
+}
+
+function RemoveHandler(what, id) {
+    callbacks[what].splice(id, 1);
 }
 
 function CallHandler(what, args) {
@@ -63,13 +63,18 @@ function EnableHandling(state = false) {
     canHandle = state;
 }
 
-window.addEventListener("keydown", KeyDownHandler, true);
-window.addEventListener("keyup", KeyUpHandler, true);
-Logger.Success("InputManager Registered!");
+function Init() {
+    window.addEventListener("keydown", KeyDownHandler, true);
+    window.addEventListener("keyup", KeyUpHandler, true);
+    
+    Logger.Success("InputManager Registered!");
+}
 
 module.exports = {
+    Init,
     Enable,
     Disable,
     AddHandler,
+    RemoveHandler,
     DispatchKeyEvent
 };

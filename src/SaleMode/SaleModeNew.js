@@ -22,6 +22,7 @@ function validate_plu(input) {
             input == '+' ||
             input == '-' ||
             input == '.' ||
+            input == ',' ||
             input == '/';
     else {
         for (let i = 0; i < input.length; i++) {
@@ -56,18 +57,24 @@ class SaleMode extends Component {
         this.multiplier = 1;
     }
 
+    placeholder() {
+        PopupManager.ShowPopup("Informație", <p>Funcția nu a fost implementată! Încercăm să implementăm funcția cât mai curând!</p>, [
+            { name: "OK" }
+        ], 1);
+    }
+
     componentDidMount() {
-        console.log("SaleMode mounted");
         InputManager.Enable();
 
-        InputManager.AddHandler("up", this.onKey.bind(this));
-        InputManager.AddHandler("down", this.onKeyDown.bind(this));
+        this.hd_up = InputManager.AddHandler("up", this.onKey.bind(this));
+        this.hd_down = InputManager.AddHandler("down", this.onKeyDown.bind(this));
 
         this.setMultiplier(1);
     }
 
     componentWillUnmount() {
-        console.log("SaleMode is unmounting!");
+        InputManager.RemoveHandler("up", this.hd_up);
+        InputManager.RemoveHandler("down", this.hd_down);
         InputManager.Disable();
     }
 
@@ -92,8 +99,6 @@ class SaleMode extends Component {
             return key.preventDefault();
         }
 
-        console.log("wowowowow")
-
         if (key.key == "Enter") {
             this.processPLU(this.plu_txt.current.value);
             this.setMultiplier(1);
@@ -103,6 +108,9 @@ class SaleMode extends Component {
 
             this.setMultiplier(parseFloat(this.plu_txt.current.value.replace(",", ".")));
             this.plu_txt.current.value = "";
+            return;
+        } else if (key.key == "F2") {
+            return this.placeholder();
         }
 
         if (document.activeElement != this.plu_txt.current) {
@@ -115,12 +123,9 @@ class SaleMode extends Component {
     }
 
     processPLU(plu) {
-        console.log(plu)
-        console.log("PLU: " + plu);
-
         if (this.isSearching) return;
 
-        let wait_popup = PopupManager.ShowPopup("Please wait!", `Searching for PLU '${plu}'...`);
+        let wait_popup = PopupManager.ShowPopup("Așteptați...", `Se caută PLU '${plu}'...`);
 
         this.isSearching = true;
 
@@ -129,14 +134,14 @@ class SaleMode extends Component {
             PopupManager.ClosePopup(wait_popup);
 
             if (!r.success) {
-                PopupManager.ShowPopup("Error", `The PLU '${plu}' was not found!`, [{ name: "OK" }]);
+                PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu a putut fi identificat!`, [], 1);
             } else {
                 this.total_txt.current.value = `${r.price} LEI`;
             }
         }).catch(e => {
             this.isSearching = false;
             PopupManager.ClosePopup(wait_popup);
-            PopupManager.ShowPopup("Error", `An unknown error has occured while searching for the product! Please try again later!`, [{ name: "OK" }]);
+            PopupManager.ShowPopup("Eroare", `O eroare necunoscută a avut loc în timpul căutării produsului! Vă rugăm sa încercați din nou!`, [], 1);
         });
 
         this.plu_txt.current.value = "";
@@ -156,7 +161,7 @@ class SaleMode extends Component {
                             <input type="text" className="pos-input-no-disabled" disabled ref={this.desc_txt}></input>
                         </div>
                         <div className="pos-text">
-                            <label>Price:</label>
+                            <label>Preț:</label>
                             <input type="text" className="pos-input-no-disabled" disabled ref={this.price_txt}></input>
                         </div>
                     </div>

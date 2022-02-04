@@ -4,15 +4,17 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import MenuPage from './Menu/MenuPage';
 import DebugBuild from './DebugBuild/DebugBuild';
-import SaleModeNew from './SaleMode/SaleModeNew';
 import AuthPage from './Menu/AuthPage';
 import PopupManager from './PopupManager';
 import SessionManager from './SessionManager';
 import Router from './Router';
+import TouchFeedback from './TouchFeedback';
+import InputManager from './InputManager';
 
 SessionManager.Init();
+TouchFeedback.Init();
+InputManager.Init();
 
 ReactDOM.render(
     <React.StrictMode>
