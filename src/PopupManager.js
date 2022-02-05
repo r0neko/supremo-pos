@@ -9,7 +9,7 @@ import Info from "./Assets/sounds/info.wav";
 
 let queue = [];
 
-let addCallback = (callback) => { };
+let popupManagerInstance = null;
 
 class PopupManager extends Component {
     constructor() {
@@ -21,38 +21,40 @@ class PopupManager extends Component {
     }
 
     static ShowPopup(title, content, buttons = [], alert = 0) {
-        if(alert >= 1 && buttons.length == 0) {
+        if (alert >= 1 && buttons.length == 0) {
             buttons = [{ name: "OK" }];
         }
 
         let e = queue.push({ title, content, buttons, alert }) - 1;
         if (e == 0)
-            addCallback(queue.shift());
+            popupManagerInstance.showPopup(queue.shift());
         return e;
     }
 
     static SetContent(handle, c) {
         let e = queue.find((e, i) => i == handle);
         if (e) e.content = c;
-        addCallback(e);
+        popupManagerInstance.showPopup(e);
     }
 
     static ClosePopup(id) {
         queue.splice(id, 1);
         if (queue.length > 0)
-            addCallback(queue.shift());
-        else addCallback(null);
+            popupManagerInstance.showPopup(queue[0]);
+        else popupManagerInstance.showPopup(null);
+    }
+
+    showPopup(e) {
+        this.setState({ currentPopup: e });
     }
 
     componentDidMount() {
-        addCallback = (e) => {
-            this.setState({ currentPopup: e });
-        }
+        popupManagerInstance = this;
     }
 
     render() {
         if (this.state.currentPopup != null) {
-            switch(this.state.currentPopup.alert) {
+            switch (this.state.currentPopup.alert) {
                 case 0: break;
                 default:
                 case 1:
@@ -68,7 +70,7 @@ class PopupManager extends Component {
             let buttons = <div className="pos-float-right" style={{ "width": "fit-content" }}>
                 {popup.buttons.map((e, i) => <Button onClick={() => {
                     if (e.callback) e.callback();
-                    addCallback(queue.shift());
+                    PopupManager.ClosePopup(i);
                 }} key={i}>{e.name}</Button>)}
             </div>;
 

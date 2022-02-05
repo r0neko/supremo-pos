@@ -4,6 +4,8 @@ import ModalPage from "../ModalForm/ModalPage"
 import SessionManager from "../SessionManager";
 import InputManager from "../InputManager";
 import PopupManager from "../PopupManager";
+import { BuildStringNoTag } from "../BuildInfo";
+import ExtDisplayManager from "../ExtDisplayManager";
 
 class AuthPage extends Component {
     constructor() {
@@ -25,9 +27,25 @@ class AuthPage extends Component {
         this.authPopup = null;
     }
 
+    displayState(state = 0) {
+        let d = ExtDisplayManager.GetDisplay();
+        d.clearAll();
+
+        switch (state) {
+            default:
+            case 0:
+                d.printLine("Autentificare", 1);
+                d.printLine("SupremoPOS v" + BuildStringNoTag, 2);
+                break;
+            case 1:
+                d.printLine("Se autentifica...", 1);
+                break;
+        }
+    }
+
     componentDidMount() {
         InputManager.Enable();
-        
+
         this.hd_down = InputManager.AddHandler("down", this.onKey.bind(this));
 
         document.focus = this.onFocusChange.bind(this);
@@ -36,6 +54,8 @@ class AuthPage extends Component {
         this.ref.user.current.addEventListener("focusout", this.onFocusChange.bind(this));
         this.ref.pass.current.addEventListener("focus", this.onFocusChange.bind(this));
         this.ref.pass.current.addEventListener("focusout", this.onFocusChange.bind(this));
+
+        this.displayState(0);
     }
 
     componentWillUnmount() {
@@ -48,6 +68,7 @@ class AuthPage extends Component {
     }
 
     authByUser(user, pass) {
+        this.displayState(1);
         this.authPopup = PopupManager.ShowPopup("Autentificare", "Autentificare in curs..." + user);
 
         SessionManager.Authenticate(user, pass).then((status) => {
@@ -59,6 +80,7 @@ class AuthPage extends Component {
                     callback: () => {
                         this.setState({ readingFromScanner: false, scannerData: null });
                         this.authPopup = null;
+                        this.displayState(0);
                     }
                 }
             ]
@@ -71,7 +93,7 @@ class AuthPage extends Component {
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal-ul dvs. a fost blocat!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A03</p>, buttons, 1);
             else if (status == -1) // server is not reachable
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nu s-a putut contacta server-ul!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A00</p>, buttons, 1);
-            else if (status == -2) // server error
+            else if (status == 4) // server error
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>O eroare neașteptată a avut loc în timpul autentificării!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A04</p>, buttons, 1);
         });
     }
@@ -105,7 +127,7 @@ class AuthPage extends Component {
                 this.timeoutInterval = null;
             }
 
-            if(this.state.readingFromScanner && this.state.scannerData != null && this.state.scannerData.length >= 6)
+            if (this.state.readingFromScanner && this.state.scannerData != null && this.state.scannerData.length >= 6)
                 this.authByCode.bind(this)(this.state.scannerData);
             else this.authByUser.bind(this)(this.ref.user.current.value, this.ref.pass.current.value);
         }
@@ -125,11 +147,11 @@ class AuthPage extends Component {
             <br />
             <div className="mb-3 mt-3">
                 <label class="form-label">Nume de utilizator:</label>
-                <input type="text" class="form-control" ref={this.ref.user}/>
+                <input type="text" class="form-control" ref={this.ref.user} />
             </div>
             <div className="mb-3">
                 <label class="form-label">Parolă:</label>
-                <input type="password" class="form-control" ref={this.ref.pass}/>
+                <input type="password" class="form-control" ref={this.ref.pass} />
             </div>
             {this.state.canScan ? <small>- sau puteți folosi scanner-ul pentru autentificare instantă -</small> : ""}
         </ModalPage>

@@ -1,7 +1,7 @@
 const Build = {
     Major: 2,
-    Minor: 14,
-    Patch: 27
+    Minor: 24,
+    Patch: 37
 };
 
 function IsProduction() {
@@ -9,9 +9,11 @@ function IsProduction() {
 }
 
 const BuildString = `${Build.Major}.${Build.Minor}.${Build.Patch}-${IsProduction() ? "production" : "dev"}`;
+const BuildStringNoTag = `${Build.Major}.${Build.Minor}.${Build.Patch}`;
 
 module.exports = {
     IsProduction,
     Build,
-    BuildString
+    BuildString,
+    BuildStringNoTag
 };

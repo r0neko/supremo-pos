@@ -7,6 +7,8 @@ import SessionManager from "../SessionManager";
 import SaleModeNew from "../SaleMode/SaleModeNew";
 import PopupManager from "../PopupManager";
 import AuthPage from "./AuthPage";
+import ExtDisplayManager from "../ExtDisplayManager";
+import Settings from "../Settings/Settings";
 
 const btnStyle = {
     height: "80px"
@@ -18,6 +20,13 @@ class MenuPage extends Component {
             <ButtonDanger onClick={this.disconnect}>Deconectare</ButtonDanger>
             <ButtonDanger onClick={this.exit}>Ieși din SupremoPOS</ButtonDanger>
         </div>
+    }
+
+    componentDidMount() {
+        let d = ExtDisplayManager.GetDisplay();
+        d.clearAll();
+
+        d.printLine("Buna ziua!", 1);
     }
 
     placeholder() {
@@ -75,7 +84,7 @@ class MenuPage extends Component {
                         <Button style={btnStyle} onClick={this.placeholder}>Raporturi Fiscale</Button>
                     </div>
                     <div class="col">
-                        <Button style={btnStyle} onClick={this.placeholder}>Configurare Sistem</Button>
+                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<Settings />)}>Configurare Sistem</Button>
                     </div>
                 </div>
             </div>

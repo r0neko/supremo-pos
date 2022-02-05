@@ -8,18 +8,39 @@ import MenuPage from "./Menu/MenuPage";
 
 let session = null;
 
+let ping_handle = null;
+let ping_msg_handle = null;
+let failedPings = 0;
+
 let callbacks = {
     "SessionExpired": [],
     "SessionDestroyed": [],
-    "SessionCreated": []
+    "SessionCreated": [],
+    "SessionPing": [],
+    "SessionPingFail": []
 };
+
+async function Ping() {
+    try {
+        let a = Date.now();
+
+        await API.Ping();
+
+        let b = Date.now();
+        call("SessionPing", [b - a]);
+    } catch (e) {
+        call("SessionPingFail");
+    }
+
+    ping_handle = setTimeout(Ping, 1500);
+}
 
 // callback functions
 function on(what, callback) {
     return callbacks[what].push(callback) - 1;
 }
 
-function call(what, args) {
+function call(what, args = []) {
     callbacks[what].forEach(e => e(...args));
 }
 
@@ -31,6 +52,13 @@ function remove(what, id) {
 function DestroyCurrent() {
     session.destroy();
     session = null;
+
+    if (ping_handle != null)
+        clearTimeout(ping_handle);
+
+    ping_handle = null;
+
+    call("SessionDestroyed");
 }
 
 function SetCurrent(s) {
@@ -60,7 +88,8 @@ async function Authenticate(user, password) {
 
         return r.error.code;
     } catch (e) {
-        console.log(e);
+        if (e.message == "Failed to fetch")
+            return -1; // network error
         return -2; // unknown error
     }
 }
@@ -81,7 +110,27 @@ function Init() {
     });
 
     on("SessionCreated", () => {
+        Ping();
         Router.RenderComponent(<MenuPage />);
+    })
+
+    on("SessionPing", () => {
+        if (failedPings > 0)
+            failedPings = 0;
+
+        if (ping_msg_handle != null) {
+            PopupManager.ClosePopup(ping_msg_handle);
+            ping_msg_handle = null;
+        }
+    });
+
+    on("SessionPingFail", () => {
+        if (failedPings > 3 && ping_msg_handle == null)
+            ping_msg_handle = PopupManager.ShowPopup("S-a pierdut conexiunea!",
+                <p>S-a pierdut conexiunea cu server-ul! Te rugăm să verifici daca există conexiune la internet.<br />Se reîncearcă conectarea...</p>
+            );
+
+        failedPings++;
     })
 }
 

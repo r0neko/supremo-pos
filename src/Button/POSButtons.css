@@ -25,7 +25,7 @@
     cursor: pointer;
 }
 
-.pos-button:active {
+.pos-button:active, .pos-button.active {
     background-color: #0378a3;
 }
 
@@ -39,7 +39,7 @@
     color: white;
 }
 
-.pos-button.pos-success:active {
+.pos-button.pos-success:active, .pos-button.pos-success.active {
     background-color: #1cb800;
     color: white;
 }
@@ -54,7 +54,7 @@
     color: white;
 }
 
-.pos-button.pos-error:active {
+.pos-button.pos-error:active, .pos-button.pos-error.active {
     background-color: #bd0404;
     color: white;
 }

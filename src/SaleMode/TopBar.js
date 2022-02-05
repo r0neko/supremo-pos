@@ -34,10 +34,10 @@ class SaleTopBar extends Component {
                     <img src={Logo} alt="SPOS Logo"></img>
                 </div>
                 <div className="pos-title">
-                    Mod Vânzare – {this.state.currentDate}
+                    {this.props.title ? this.props.title + " – " : ""}{this.state.currentDate}
                 </div>
                 <div className="pos-account">
-                    {SessionManager.GetCurrentSession().user.name}
+                    {SessionManager.GetCurrentSession() == null ? "Ne-autentificat" : SessionManager.GetCurrentSession().user.name}
                 </div>
             </div>
     }

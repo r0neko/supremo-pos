@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Open 24 Display';
+    src: url("../Assets/fonts/Open24DisplaySt.ttf") format('truetype')
+}
+
 .debug {
     position: fixed;
     bottom: 0;
@@ -10,4 +15,33 @@
     color: white;
 
     z-index: 100000;
+
+    pointer-events:none;
+}
+
+.debug.vfd {
+    background-color: rgb(0, 199, 66, 0.7);
+    color: black;
+
+    font-family: 'Open 24 Display';
+    font-size: 25px;
+
+    /* width: 300px; */
+    /* height: 100px; */
+
+    text-align: left;
+    padding: 15px;
+
+    border:white solid 5px;
+
+    margin-bottom: 100px;
+}
+
+.debug.left {
+    right: auto;
+    left: 0;
+
+    background-color: rgba(0, 0, 255, 0.5);
+
+    text-align: left;
 }
