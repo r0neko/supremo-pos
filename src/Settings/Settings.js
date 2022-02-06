@@ -13,11 +13,12 @@ import AuthPage from "../Menu/AuthPage";
 import System from "./pages/System";
 import BackOffice from "./pages/BackOffice";
 import Server from "./pages/Server";
+import Debug from "./pages/Debug";
 
 const menu_items = [
     {name: "Server", render: <Server />},
     {name: "Produse", render: <BackOffice />},
-    {name: "Dezvoltare", render: <p>Inca in lucru!</p>},
+    {name: "Dezvoltare", render: <Debug />},
     {name: "Sistem", render: <System />},
     {name: "Ieșire", onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
 ];

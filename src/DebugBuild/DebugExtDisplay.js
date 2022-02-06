@@ -7,11 +7,30 @@ class DebugExtDisplay extends Component {
         super();
 
         this.state = {
+	    shown: true,
             display: [
                 "TEST DISPLAY",
                 "TEST DISPLAY"
             ]
         }
+    }
+
+    static setVisibility(v) {
+        if(ExtDisplayManager.GetDisplay() != null) ExtDisplayManager.GetDisplay().setVisible(v);
+        return v;
+    }
+
+    static getVisibility() {
+        if(ExtDisplayManager.GetDisplay() != null) return ExtDisplayManager.GetDisplay().getVisible();
+        else return true;
+    }
+
+    getVisible() {
+        return this.state.shown;
+    }
+
+    setVisible(v) {
+        this.setState({shown: v});
     }
 
     componentDidMount() {
@@ -40,6 +59,8 @@ class DebugExtDisplay extends Component {
     }
 
     render() {
+	if(!this.state.shown) return null;
+
         return <div className="debug vfd">
             {
                 this.state.display.map(a => <Fragment>
