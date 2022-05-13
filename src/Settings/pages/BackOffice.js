@@ -1,12 +1,13 @@
 import { Component, Fragment } from "react";
 import Button from "../../Button/Button";
+import LocaleManager from "../../Locale/LocaleManager";
 
 import BackOfficeAddProduct from "./backoffice/BackOfficeAddProduct";
 import BackOfficeEditProduct from "./backoffice/BackOfficeEditProduct";
 
 const menu_items = [
-    { name: "Adaugare", render: <BackOfficeAddProduct /> },
-    { name: "Editare", render: <BackOfficeEditProduct /> },
+    { name: LocaleManager.GetString("general.add"), render: <BackOfficeAddProduct /> },
+    { name: LocaleManager.GetString("general.edit"), render: <BackOfficeEditProduct /> },
 ];
 
 class Settings extends Component {

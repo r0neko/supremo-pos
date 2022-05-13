@@ -1,8 +1,10 @@
 import { Component, Fragment, createRef } from "react";
 import API from "../../../API";
 import Button from "../../../Button/Button";
+import LocaleManager from "../../../Locale/LocaleManager";
 
 import PopupManager from "../../../PopupManager";
+import Product from "../../../Product";
 
 class BackOfficeAddProduct extends Component {
     constructor() {
@@ -36,17 +38,13 @@ class BackOfficeAddProduct extends Component {
         let plu = this.prod_plu.current.value;
         let wait_popup = PopupManager.ShowPopup("Așteptați...", `Se caută PLU '${plu}'...`);
 
-        API.SearchProductID(plu).then(r => {
+        Product.findPLU(plu).then(r => {
             PopupManager.ClosePopup(wait_popup);
 
-            if (!r.success) {
-                PopupManager.ShowPopup("Eroare", `O eroare neașteptată a avut loc la procesarea codului PLU!`, [], 1);
-            } else {
-                if (r.product) {
-                    this.setState({ id: r.product.id, editingProduct: true, product: r.product });
-                } else
-                    PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu există!`, [], 1);
-            }
+            if (r)
+                this.setState({ id: r.id, editingProduct: true, product: r });
+            else
+                PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu există!`, [], 1);
         }).catch(e => {
             PopupManager.ClosePopup(wait_popup);
             PopupManager.ShowPopup("Eroare", `O eroare necunoscută a avut loc în timpul căutării produsului! Vă rugăm sa încercați din nou! ${e}`, [], 1);
@@ -60,33 +58,33 @@ class BackOfficeAddProduct extends Component {
     render() {
         if (!this.state.editingProduct)
             return <Fragment>
-                <h1>Căutare produs</h1>
+                <h1>{LocaleManager.GetString("config.products.searchProduct")}</h1>
                 <div className="mb-3 mt-3">
-                    <label class="form-label">Cod de bare/PLU:</label>
+                    <label class="form-label">{LocaleManager.GetString("general.barcode")}/{LocaleManager.GetString("general.plu")}:</label>
                     <input type="text" class="form-control" ref={this.prod_plu} />
                 </div>
-                <Button onClick={this.find_product.bind(this)}>Căutare</Button>
+                <Button onClick={this.find_product.bind(this)}>{LocaleManager.GetString("general.search")}</Button>
             </Fragment>
 
         return <Fragment>
-            <h1>Editare Produs #{this.state.product.id}</h1>
+            <h1>{LocaleManager.GetString("config.products.editingProduct", {id: this.state.product.id})}</h1>
             <div className="mb-3 mt-3">
-                <label class="form-label">Nume Produs:</label>
-                <input type="text" class="form-control" ref={this.product_name} value={this.state.product.description} onChange={e => this.updateProdField("description", e.target.value)}/>
+                <label class="form-label">{LocaleManager.GetString("general.name")}:</label>
+                <input type="text" class="form-control" ref={this.product_name} value={this.state.product.description} onChange={e => this.updateProdField("description", e.target.value)} />
             </div>
             <div className="mb-3">
-                <label class="form-label">Preț:</label>
-                <input type="text" class="form-control" ref={this.price} value={this.state.product.price} onChange={e => this.updateProdField("price", e.target.value)}/>
+                <label class="form-label">{LocaleManager.GetString("general.price")}:</label>
+                <input type="text" class="form-control" ref={this.price} value={this.state.product.price} onChange={e => this.updateProdField("price", e.target.value)} />
             </div>
             <div className="mb-3">
-                <label class="form-label">Cod Bare</label>
-                <input type="text" class="form-control" ref={this.barcode} value={this.state.product.barcode} onChange={e => this.updateProdField("barcode", e.target.value)}/>
+                <label class="form-label">{LocaleManager.GetString("general.barcode")}:</label>
+                <input type="text" class="form-control" ref={this.barcode} value={this.state.product.barcode} onChange={e => this.updateProdField("barcode", e.target.value)} />
             </div>
             <div className="mb-3">
-                <label class="form-label">PLU(optional)</label>
-                <input type="text" class="form-control" ref={this.plu} value={this.state.product.plu} onChange={e => this.updateProdField("plu", e.target.value)}/>
+                <label class="form-label">{LocaleManager.GetString("general.plu")}({LocaleManager.GetString("general.optional")}):</label>
+                <input type="text" class="form-control" ref={this.plu} value={this.state.product.plu} onChange={e => this.updateProdField("plu", e.target.value)} />
             </div>
-            <Button onClick={this.edit_product.bind(this)}>Modificare</Button>
+            <Button onClick={this.edit_product.bind(this)}>{LocaleManager.GetString("general.save")}</Button>
         </Fragment>
     }
 }

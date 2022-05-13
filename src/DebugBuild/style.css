@@ -37,9 +37,9 @@
     margin-bottom: 100px;
 }
 
-.debug.left {
-    right: auto;
-    left: 0;
+.debug.stats {
+    top: 0;
+    bottom: auto;
 
     background-color: rgba(0, 0, 255, 0.5);
 

@@ -1,34 +1,43 @@
 import build_info from "./BuildInfo";
 import SessionManager from "./SessionManager";
+import ConfigManager from "./ConfigManager";
+import SystemManager from "./SystemManager";
 
-let ServerEndpoint = "http://vcs.r0neko.me:1282"; // temporary endpoint
-
-function GetEndpoint() {
-    return ServerEndpoint;
+async function SearchPLU(plu) {
+    return fetchJSON("/api/product?plu=" + encodeURIComponent(plu));
 }
 
-function SetEndpoint(e) {
-    return ServerEndpoint = e;
-}
-
-async function SearchProductID(prid) {
-    return fetchJSON(ServerEndpoint + "/api/product?plu=" + encodeURIComponent(prid));
+async function SearchBarcode(barcode) {
+    return fetchJSON("/api/product?barcode=" + encodeURIComponent(barcode));
 }
 
 async function Me() {
-    return fetchJSON(ServerEndpoint + "/api/me");
+    if (ConfigManager.demo_mode.value) {
+        return {
+            id: 1,
+            name: "admin",
+        };
+    }
+
+    return fetchJSON("/api/me");
 }
 
 async function Ping() {
-    return fetchJSON(ServerEndpoint + "/api/ping");
+    if (ConfigManager.demo_mode.value)
+        return { success: true };
+    return fetchJSON("/api/ping");
 }
 
 async function DestroySession() {
-    return fetchJSON(ServerEndpoint + "/api/destroy");
+    if (ConfigManager.demo_mode.value)
+        return { success: true };
+    return fetchJSON("/api/destroy");
 }
 
 async function AddProduct(name, price, barcode, plu = null) {
-    return fetchJSON(ServerEndpoint + "/api/product", {
+    if (ConfigManager.demo_mode.value)
+        return { success: true };
+    return fetchJSON("/api/product", {
         method: "POST",
         body: JSON.stringify({
             name,
@@ -40,7 +49,9 @@ async function AddProduct(name, price, barcode, plu = null) {
 }
 
 async function ModifyProduct(id, name, price, barcode, plu = null) {
-    return fetchJSON(ServerEndpoint + "/api/product", {
+    if (ConfigManager.demo_mode.value)
+        return { success: true };
+    return fetchJSON("/api/product", {
         method: "PUT",
         body: JSON.stringify({
             id,
@@ -52,13 +63,52 @@ async function ModifyProduct(id, name, price, barcode, plu = null) {
     });
 }
 
+async function StartSaleSession() {
+    return fetchJSON("/api/sale/session", {
+        method: "POST"
+    });
+}
+
+async function VoidProductInSaleSession(session, product) {
+    return fetchJSON("/api/sale/session/product", {
+        method: "DELETE",
+        body: JSON.stringify({
+            s: session,
+            p: product.id
+        })
+    });
+}
+
+async function AddProductToSaleSession(session, product) {
+    return fetchJSON("/api/sale/session/product", {
+        method: "POST",
+        body: JSON.stringify({
+            s: session,
+            p: product.id,
+            q: product.quantity
+        })
+    });
+}
+
+async function CloseSaleSession(session) {
+    return fetchJSON("/api/sale/session", {
+        method: "DELETE",
+        body: JSON.stringify({
+            s: session
+        })
+    });
+}
+
 async function AuthenticateUser(user, pass) {
-    return fetchJSON(ServerEndpoint + "/api/auth", {
+    if (ConfigManager.demo_mode.value)
+        return { success: true, token: "fake-token" };
+    return fetchJSON("/api/auth", {
         method: "POST",
         body: JSON.stringify({
             u: user,
             p: pass,
-            version: build_info.BuildString
+            v: build_info.BuildString,
+            h: await SystemManager.getHardwareID()
         })
     });
 }
@@ -72,20 +122,21 @@ async function fetchJSON(url, options = {}) {
 
     options.headers["Content-Type"] = "application/json";
 
-    console.log(options);
-
-    return fetch(url, options).then(r => r.json());
+    return fetch(ConfigManager.endpoint.value + url, options).then(r => r.json());
 }
 
 export default {
-    SearchProductID,
     AuthenticateUser,
     Me,
     Ping,
     AddProduct,
     ModifyProduct,
     DestroySession,
-    GetEndpoint,
-    SetEndpoint,
-    fetchJSON
+    fetchJSON,
+    SearchPLU,
+    SearchBarcode,
+    StartSaleSession,
+    AddProductToSaleSession,
+    VoidProductInSaleSession,
+    CloseSaleSession
 };

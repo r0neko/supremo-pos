@@ -26,7 +26,7 @@
 
 .pos-content-container {
     width: 100%;
-    height: 90%;
+    height: calc(100% - 45px);
     padding: 15px;
 }
 
@@ -46,4 +46,34 @@
 .pos-text label {
     display: inline;
     padding-right: 10px;
+}
+
+.pos-vert-list {
+    overflow: scroll;
+    overflow-x: hidden;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+
+    border: 1px solid black;
+
+    font-size: 20px;
+}
+
+.list-item {
+    padding: 10px;
+}
+
+.list-item.selected {
+    background-color: #84dcfc;
+}
+
+.list-item:hover {
+    background-color: #c4efff;
+}
+
+.list-item:active {
+    background-color: #67d1f8;
 }

@@ -1,0 +1,27 @@
+.product-list .product-list__item.void {
+    background-color: #ff2b2b;
+    color: white;
+}
+
+.product-list .product-list__item.void:hover {
+    background-color: #b82b2b;
+    color: white;
+}
+
+.product-list .product-list__item.void.selected {
+    background-color: #b61e1e;
+}
+
+.product-list__item__name {
+    font-weight: bold;
+}
+
+.product-list__item__price {
+    text-align: right;
+}
+
+.product-list__item__void {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: right;
+}

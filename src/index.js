@@ -12,23 +12,36 @@ import SessionManager from './SessionManager';
 import Router from './Router';
 import TouchFeedback from './TouchFeedback';
 import InputManager from './InputManager';
-import DebugExtDisplay from './DebugBuild/DebugExtDisplay';
+import ExtDisplayManager from './ExtDisplayManager';
 
-SessionManager.Init();
-TouchFeedback.Init();
-InputManager.Init();
+async function onUnload() {
+    await ExtDisplayManager.Destroy();
+    SessionManager.DestroyCurrent();
+}
 
-ReactDOM.render(
-    <React.StrictMode>
-        <React.Fragment>
-            <PopupManager />
-            <DebugInfo />
-            <DebugBuild />
-            <DebugExtDisplay />
-            <Router />
-        </React.Fragment>
-    </React.StrictMode> ,
-    document.getElementById('root')
-);
+async function main() {
+    window.addEventListener("beforeunload", onUnload);
 
-Router.RenderComponent(<AuthPage />);
+    SessionManager.Init();
+    TouchFeedback.Init();
+    InputManager.Init();
+
+    ReactDOM.render(
+        <React.StrictMode>
+            <React.Fragment>
+                <PopupManager />
+                <DebugInfo />
+                <DebugBuild />
+                {/* <DebugExtDisplay /> */}
+                <Router />
+            </React.Fragment>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+
+    await ExtDisplayManager.Init();
+
+    Router.RenderComponent(<AuthPage />);
+}
+
+main();

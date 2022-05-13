@@ -1,0 +1,163 @@
+{
+    "name": "Romanian",
+    "code": "ro",
+    "nativeName": "Română",
+    "strings": {
+        "debug": {
+            "stats": "Statistici dezvoltare",
+            "connected": "Conectat",
+            "sessionToken": "Token sesiune",
+            "ping": "Ping",
+            "noSession": "nicio sesiune",
+            "failedPings": "Ping-uri eșuate"
+        },
+        "general": {
+            "evaluationBuild": "Cu scop de evaluare.",
+            "build": "Build",
+            "pleaseWait": "Vă rugăm așteptați...",
+            "yes": "Da",
+            "no": "Nu",
+            "ok": "Ok",
+            "info": "Informatie",
+            "error": "Eroare",
+            "exit": "Ieșire",
+            "cancel": "Anulare",
+            "add": "Adăugare",
+            "save": "Salvare",
+            "edit": "Editare",
+            "search": "Căutare",
+            "name": "Nume",
+            "description": "Descriere",
+            "price": "Preț",
+            "type": "Tip",
+            "barcode": "Cod de bare",
+            "quantity": "Cantitate",
+            "status": "Stare",
+            "driver": "Driver",
+            "plu": "PLU",
+            "port": "Port",
+            "optional": "opțional",
+            "reduced": {
+                "feminine": "redusă",
+                "masculine": "redus"
+            },
+            "included": {
+                "feminine": "inclusă",
+                "masculine": "inclus"
+            },
+            "normal": {
+                "feminine": "normală",
+                "masculine": "normal"
+            },
+            "default": {
+                "feminine": "implicită",
+                "masculine": "implicit"
+            },
+            "disabled": {
+                "feminine": "dezactivată",
+                "masculine": "dezactivat"
+            },
+            "disconnected": {
+                "feminine": "deconectată",
+                "masculine": "deconectat"
+            },
+            "enabled": {
+                "feminine": "activată",
+                "masculine": "activat"
+            },
+            "connected": {
+                "feminine": "conectată",
+                "masculine": "conectat"
+            },
+            "width": "Lățime",
+            "height": "Înălțime",
+            "refresh": "Reîmprospătare",
+            "bitRate": "Viteză de transmisie",
+            "testPrint": "Testare imprimare",
+            "disconnect": "Deconectare",
+            "exitFromApp": "Ieșire din SupremoPOS",
+            "message": {
+                "notImplemented": "Funcția nu a fost implementată! Încercăm să implementăm funcția cât mai curând!",
+                "notRunningInClient": "SupremoPOS nu rulează sub aplicația nativă."
+            }
+        },
+        "auth": {
+            "text": "Autentificare",
+            "connect": "Conectare",
+            "inProgress": "Se autentifică...",
+            "prompt": "Vă rugăm să vă autentificați pentru a începe sesiunea!",
+            "errors": {
+                "wrongCreds": "Numele de utilizator sau parola sunt greșite. Vă rugăm să încercați din nou."
+            },
+            "username": "Nume de utilizator",
+            "password": "Parolă",
+            "canScan": "Puteți folosi scanner-ul pentru autentificare.",
+            "readingData": "Se citesc datele de autentificare..."
+        },
+        "menu": {
+            "mainMenu": "Meniu principal",
+            "welcomeText": "Bun venit, %name%(%id%)",
+            "fiscalReports": "Rapoarte fiscale",
+            "configureSystem": "Configurare sistem",
+            "promptSelect": "Selectează un mod de funcționare pentru a începe sesiunea.",
+            "message": {
+                "disconnectQuestion": "Ești sigur că doresti să te deconectezi?",
+                "exitQuestion": "Esti sigur că dorești să ieși din SupremoPOS?"
+            },
+            "externalText": "Buna ziua!"
+        },
+        "sale": {
+            "saleMode": "Mod Vanzare",
+            "descriptionLabel": "Desc",
+            "priceLabel": "Pret",
+            "total": "Total",
+            "subtotalLabel": "Subtotal",
+            "nextClientPrompt": "Următorul client",
+            "amountDue": "De platit",
+            "closeReceipt": "Închidere Bon",
+            "message": {
+                "sellingExit": "Sesiunea de vanzare nu s-a incheiat! Daca doriti sa iesiti din aplicatie, va rugam sa inchideti sesiunea de vanzare actuala!",
+                "searchingPLU": "Se caută articolul '%plu%'...",
+                "pluNotFound": "Articolul '%plu%' nu există!",
+                "searchError": "O eroare necunoscută a avut loc în timpul căutării produsului! Vă rugăm sa încercați din nou! %error%",
+                "sessionCreationFail": "Nu s-a putut crea o sesiune de vanzare!",
+                "closeReceiptOnSaleMessage": "Bonul nu poate fi inchis! Produsul(-ele) nu au fost achitate!"
+            }
+        },
+        "config": {
+            "configSystem": "Configurare Sistem",
+            "configure": "Configurare",
+            "section": {
+                "server": "Server",
+                "database": "Baza de date",
+                "products": "Produse",
+                "debug": "Dezvoltare",
+                "system": "Sistem",
+                "externalDisplay": "Ecran Extern",
+                "fiscalPrinter": "Imprimanta Fiscala"
+            },
+            "products": {
+                "addProduct": "Înregistrare Produs",
+                "productName": "Nume Produs",
+                "editingProduct": "Editare Produs #%id%",
+                "searchProduct": "Cautare Produs"
+            },
+            "server": {
+                "connection": "Conexiune",
+                "endpoint": "Endpoint",
+                "changeEndpoint": "Schimba Endpoint"
+            },
+            "vat": {
+                "quotation": "Cote TVA",
+                "vat": "TVA",
+                "vatType": "TVA %type%",
+                "exemptFromVAT": "scutit de TVA"
+            }
+        },
+        "paymentMethods": {
+            "card": "Card Bancar",
+            "cash": "Numerar",
+            "other": "Altă metodă"
+        }
+    }
+}

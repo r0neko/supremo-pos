@@ -15,6 +15,10 @@
     display: block;
 }
 
+.pos-button.pos-fill-width {
+    width: 100%;
+}
+
 .pos-button:disabled {
     background-color: #979797 !important;
     cursor: not-allowed;

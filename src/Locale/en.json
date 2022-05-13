@@ -1,0 +1,63 @@
+{
+    "name": "English",
+    "code": "en",
+    "nativeName": "English",
+    "strings": {
+        "debug": {
+            "stats": "Debug Stats",
+            "connected": "Connected",
+            "sessionToken": "Session Token",
+            "ping": "Ping",
+            "noSession": "no session",
+            "failedPings": "Failed pings"
+        },
+        "general": {
+            "evaluationBuild": "For evaluation purposes.",
+            "build": "Build",
+            "pleaseWait": "Please wait...",
+            "yes": "Yes",
+            "no": "No",
+            "info": "Information",
+            "exit": "Exit",
+            "cancel": "Cancel"
+        },
+        "auth": {
+            "text": "Authentication",
+            "connect": "Connect",
+            "inProgress": "Authentication in progress...",
+            "prompt": "Please log in to start the session!",
+            "errors": {
+                "wrongCreds": "The username and/or password are wrong. Please try again."
+            },
+            "username": "Username",
+            "password": "Password",
+            "canScan": "You can use the scanner in order to connect.",
+            "readingData": "Reading authentication data..."
+        },
+        "menu": {
+            "mainMenu": "Main menu",
+            "welcomeText": "Welcome, %name%(%id%)",
+            "fiscalReports": "Fiscal reports",
+            "configureSystem": "System Configuration",
+            "promptSelect": "Select a mode of operation to start the session."
+        },
+        "sale": {
+            "saleMode": "Sale mode",
+            "descriptionLabel": "Desc",
+            "priceLabel": "Price",
+            "total": "Total",
+            "subtotalLabel": "Subtotal",
+            "nextClientPrompt": "Next Customer",
+            "amountDue": "Due",
+            "closeReceipt": "Close Receipt",
+            "messages": {
+                "sellingExit": "This sales session hasn't been closed! If you want to exit the application, please close the current sales session!"
+            }
+        },
+        "paymentMethods": {
+            "card": "Credit Card",
+            "cash": "Cash",
+            "other": "Other method"
+        }
+    }
+}

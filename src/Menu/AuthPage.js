@@ -6,6 +6,7 @@ import InputManager from "../InputManager";
 import PopupManager from "../PopupManager";
 import { BuildStringNoTag } from "../BuildInfo";
 import ExtDisplayManager from "../ExtDisplayManager";
+import LocaleManager from "../Locale/LocaleManager";
 
 class AuthPage extends Component {
     constructor() {
@@ -29,16 +30,18 @@ class AuthPage extends Component {
 
     displayState(state = 0) {
         let d = ExtDisplayManager.GetDisplay();
+        if(d == null) return;
         d.clearAll();
 
         switch (state) {
             default:
             case 0:
-                d.printLine("Autentificare", 1);
-                d.printLine("SupremoPOS v" + BuildStringNoTag, 2);
+                d.print(LocaleManager.GetString("auth.text"));
+                d.setCursor(0, 1);
+                d.print("SupremoPOS v" + BuildStringNoTag);
                 break;
             case 1:
-                d.printLine("Se autentifica...", 1);
+                d.print(LocaleManager.GetString("auth.inProgress"));
                 break;
         }
     }
@@ -69,7 +72,7 @@ class AuthPage extends Component {
 
     authByUser(user, pass) {
         this.displayState(1);
-        this.authPopup = PopupManager.ShowPopup("Autentificare", "Autentificare in curs..." + user);
+        this.authPopup = PopupManager.ShowPopup(LocaleManager.GetString("auth.text"), "Autentificare in curs...");
 
         SessionManager.Authenticate(user, pass).then((status) => {
             PopupManager.ClosePopup(this.authPopup);
@@ -85,8 +88,9 @@ class AuthPage extends Component {
                 }
             ]
 
+            // TODO: traducere
             if (status == 1) // incorrect user/pass
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nume de utilizator/parola incorecte!</p>, buttons, 1);
+                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>{LocaleManager.GetString("auth.errors.wrongCreds")}</p>, buttons, 1);
             else if (status == 2) // not associated with the server
                 this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal ne-alocat pentru acest serviciu!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A01</p>, buttons, 1);
             else if (status == 3) // device banned
@@ -135,25 +139,25 @@ class AuthPage extends Component {
 
     render() {
         if (this.state.readingFromScanner) {
-            return <ModalPage title="Autentificare">
-                Se citesc datele de autentificare...<br />
-                Va rugam asteptati...<br />
+            return <ModalPage title={LocaleManager.GetString("auth.text")}>
+                {LocaleManager.GetString("auth.readingData")}<br />
+                {LocaleManager.GetString("general.pleaseWait")}<br />
                 <small>{this.state.scannerData}</small>
             </ModalPage>
         }
 
-        return <ModalPage title="Autentificare" footer={<div className="pos-float-right" style={{ "width": "fit-content" }}><Button onClick={() => this.authByUser(this.ref.user.current.value, this.ref.pass.current.value)}>Autentificare</Button></div>}>
-            Vă rugăm să vă autentificați pentru a începe sesiunea!
+        return <ModalPage title={LocaleManager.GetString("auth.text")} footer={<div className="pos-float-right" style={{ "width": "fit-content" }}><Button onClick={() => this.authByUser(this.ref.user.current.value, this.ref.pass.current.value)}>{LocaleManager.GetString("auth.connect")}</Button></div>}>
+            {LocaleManager.GetString("auth.prompt")}
             <br />
             <div className="mb-3 mt-3">
-                <label class="form-label">Nume de utilizator:</label>
+                <label class="form-label">{LocaleManager.GetString("auth.username")}:</label>
                 <input type="text" class="form-control" ref={this.ref.user} />
             </div>
             <div className="mb-3">
-                <label class="form-label">Parolă:</label>
+                <label class="form-label">{LocaleManager.GetString("auth.password")}:</label>
                 <input type="password" class="form-control" ref={this.ref.pass} />
             </div>
-            {this.state.canScan ? <small>- sau puteți folosi scanner-ul pentru autentificare instantă -</small> : ""}
+            {this.state.canScan ? <small>- {LocaleManager.GetString("auth.canScan")} -</small> : ""}
         </ModalPage>
     }
 }

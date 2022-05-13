@@ -10,81 +10,85 @@ import AuthPage from "./AuthPage";
 import ExtDisplayManager from "../ExtDisplayManager";
 import Settings from "../Settings/Settings";
 
+import ElectronManager from "../ElectronManager";
+import LocaleManager from "../Locale/LocaleManager";
+
 const btnStyle = {
-    height: "80px"
+    height: "80px",
+    width: "100%"
 }
 
 class MenuPage extends Component {
     getFooter() {
         return <div className="pos-float-right" style={{ "width": "fit-content" }}>
-            <ButtonDanger onClick={this.disconnect}>Deconectare</ButtonDanger>
-            <ButtonDanger onClick={this.exit}>Ieși din SupremoPOS</ButtonDanger>
+            <ButtonDanger onClick={this.disconnect}>{LocaleManager.GetString("general.disconnect")}</ButtonDanger>
+            <ButtonDanger onClick={this.exit}>{LocaleManager.GetString("general.exitFromApp")}</ButtonDanger>
         </div>
     }
 
     componentDidMount() {
         let d = ExtDisplayManager.GetDisplay();
-        d.clearAll();
+        if (d == null) return;
 
-        d.printLine("Buna ziua!", 1);
+        d.clearAll();
+        d.print(LocaleManager.GetString("menu.externalText"));
     }
 
     placeholder() {
-        PopupManager.ShowPopup("Informație", <p>Funcția nu a fost implementată! Încercăm să implementăm funcția cât mai curând!</p>, [
-            { name: "OK" }
-        ], 1);
+        PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("general.message.notImplemented")}</p>, [], 1);
     }
 
     disconnect() {
-        PopupManager.ShowPopup("Informație", <p>Ești sigur că doresti să te deconectezi?</p>, [
+        PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("menu.message.disconnectQuestion")}</p>, [
             {
-                name: "Da", callback: () => {
+                name: LocaleManager.GetString("general.yes"), callback: () => {
                     SessionManager.DestroyCurrent();
                     Router.RenderComponent(<AuthPage />);
                 }
             },
-            { name: "Nu" }
+            { name: LocaleManager.GetString("general.no") }
         ], 2);
     }
 
     exit() {
-        if(true) {
-            return PopupManager.ShowPopup("Informație", <p>SupremoPOS nu rulează sub aplicația nativă.</p>, [
-                { name: "OK" }
-            ], 1);
+        if (!ElectronManager.HasElectron()) {
+            return PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("general.message.notRunningInClient")}</p>, [], 1);
         }
 
-        PopupManager.ShowPopup("Informație", <p>Esti sigur că dorești să ieși din SupremoPOS?</p>, [
+        PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("menu.message.exitQuestion")}</p>, [
             {
-                name: "Da", callback: () => {
+                name: LocaleManager.GetString("general.yes"), callback: () => {
                     SessionManager.DestroyCurrent();
-                    // exit
+                    ElectronManager.GetRemote().getCurrentWindow().close();
                 }
             },
-            { name: "Nu" }
+            { name: LocaleManager.GetString("general.no") }
         ], 2);
     }
 
     render() {
         let session = SessionManager.GetCurrentSession();
 
-        if(session == null) return;
+        if (session == null) return;
 
-        return <ModalPage title="Meniu principal" footer={this.getFooter()}>
-            Bine ai venit, {session.user.name}({session.user.id})<br />
-            Selectează un mod de funcționare pentru a începe sesiunea.
+        return <ModalPage title={LocaleManager.GetString("menu.mainMenu")} footer={this.getFooter()}>
+            {LocaleManager.GetString("menu.welcomeText", {
+                name: session.user.name,
+                id: session.user.id
+            })}<br />
+            {LocaleManager.GetString("menu.promptSelect")}
             <br />
             <br />
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<SaleModeNew />)}>Mod Vânzare</Button>
+                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<SaleModeNew />)}>{LocaleManager.GetString("sale.saleMode")}</Button>
                     </div>
                     <div class="col">
-                        <Button style={btnStyle} onClick={this.placeholder}>Raporturi Fiscale</Button>
+                        <Button style={btnStyle} onClick={this.placeholder}>{LocaleManager.GetString("menu.fiscalReports")}</Button>
                     </div>
                     <div class="col">
-                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<Settings />)}>Configurare Sistem</Button>
+                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<Settings />)}>{LocaleManager.GetString("menu.configureSystem")}</Button>
                     </div>
                 </div>
             </div>

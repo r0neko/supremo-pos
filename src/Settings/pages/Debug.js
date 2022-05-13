@@ -1,35 +1,63 @@
 import { Component, Fragment } from "react";
 import Button from "../../Button/Button";
 
-import DebugInfo from "../../DebugBuild/DebugInfo";
-import DebugExtDisplay from "../../DebugBuild/DebugExtDisplay";
+import ConfigManager from "../../ConfigManager";
+import ElectronManager from "../../ElectronManager";
+import SystemManager from "../../SystemManager";
 
 class Debug extends Component {
     constructor() {
         super();
 
         this.state = {
-            debug_stats: true,
-            virtual_disp: true
+            debug_stats: ConfigManager.show_debug_stats.value,
+            virtual_display: ConfigManager.show_display.value,
+            demo_mode: ConfigManager.demo_mode.value,
+            touch_beep: ConfigManager.touch_beep.value
         };
     }
 
-    toggle_debug_stats() {
+    onConfigUpdate(param, new_val) {
         this.setState({
-            debug_stats: DebugInfo.setVisibility(!DebugInfo.getVisibility())
-        });
+            [param]: new_val
+        })
     }
 
-    toggle_virtual_display() {
-        this.setState({
-            virtual_disp: DebugExtDisplay.setVisibility(!DebugExtDisplay.getVisibility())
-        });
+    toggleParam(param) {
+        ConfigManager[param].value = !ConfigManager[param].value;
+    }
+
+    componentDidMount() {
+        ConfigManager.show_debug_stats.on("update", this.onConfigUpdate.bind(this, "debug_stats"));
+        ConfigManager.show_display.on("update", this.onConfigUpdate.bind(this, "virtual_display"));
+        ConfigManager.demo_mode.on("update", this.onConfigUpdate.bind(this, "demo_mode"));
+        ConfigManager.touch_beep.on("update", this.onConfigUpdate.bind(this, "touch_beep"));
+    }
+
+    componentWillUnmount() {
+        ConfigManager.show_debug_stats.off("update", this.onConfigUpdate.bind(this, "debug_stats"));
+        ConfigManager.show_display.off("update", this.onConfigUpdate.bind(this, "virtual_display"));
+        ConfigManager.demo_mode.off("update", this.onConfigUpdate.bind(this, "demo_mode"));
+        ConfigManager.touch_beep.off("update", this.onConfigUpdate.bind(this, "touch_beep"));
+    }
+
+    setScreenSize() {
+        SystemManager.SetScreenSize(1024, 768);
+    }
+
+    setFrameless(s = false) {
+        ElectronManager.GetRemote().getCurrentWindow().setFrame(s);
     }
 
     render() {
         return <Fragment>
-            <Button onClick={this.toggle_debug_stats.bind(this)}>{this.state.debug_stats ? "Ascundere" : "Afișare"} Statistici Debug</Button><br/><br/>
-            <Button onClick={this.toggle_virtual_display.bind(this)}>{this.state.virtual_disp ? "Ascundere" : "Afișare"} Ecran Virtual</Button>
+            <Button onClick={this.toggleParam.bind(this, "show_debug_stats")}>{this.state.debug_stats ? "Ascundere" : "Afișare"} Statistici Debug</Button><br /><br />
+            <Button onClick={this.toggleParam.bind(this, "show_display")}>{this.state.virtual_display ? "Ascundere" : "Afișare"} Ecran Virtual</Button><br /><br />
+            <Button onClick={this.toggleParam.bind(this, "demo_mode")}>{this.state.demo_mode ? "Dezactivare" : "Activare"} Mod Demo</Button><br /><br />
+            <Button onClick={this.toggleParam.bind(this, "touch_beep")}>{this.state.touch_beep ? "Dezactivare" : "Activare"} Beep la Touch</Button><br /><br />
+            <Button onClick={this.setScreenSize.bind(this)}>Setare 1024x768</Button><br /><br />
+            <Button onClick={this.setFrameless.bind(this, false)}>Mod fereastra</Button><br /><br />
+            <Button onClick={this.setFrameless.bind(this, true)}>Mod fara rama</Button><br /><br />
         </Fragment>
     }
 }

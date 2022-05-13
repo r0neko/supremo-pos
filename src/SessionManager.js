@@ -5,6 +5,7 @@ import Session from "./Session";
 import API from "./API";
 
 import MenuPage from "./Menu/MenuPage";
+import AuthPage from "./Menu/AuthPage";
 
 let session = null;
 
@@ -24,11 +25,15 @@ async function Ping() {
     try {
         let a = Date.now();
 
-        await API.Ping();
+        let r = await API.Ping();
+
+        if(r.success == false && r.error.code == 2)
+            return call("SessionExpired");
 
         let b = Date.now();
         call("SessionPing", [b - a]);
     } catch (e) {
+        console.error(e);
         call("SessionPingFail");
     }
 
@@ -50,6 +55,8 @@ function remove(what, id) {
 
 // session manager functions
 function DestroyCurrent() {
+    if(session == null) return;
+    
     session.destroy();
     session = null;
 
@@ -97,16 +104,13 @@ async function Authenticate(user, password) {
 // init the session manager callbacks
 function Init() {
     on("SessionExpired", () => {
-        PopupManager.ShowPopup({
-            currentPopup: {
-                title: "Sesiune expirată",
-                content: "Sesiunea ta a expirat. Te rugăm să te autentifici din nou.",
-                buttons: [{
-                    name: "Autentificare",
-                    callback: DestroyCurrent
-                }]
+        PopupManager.ShowPopup("Sesiune expirată", "Sesiunea ta a expirat. Te rugăm să te autentifici din nou.", [{
+            name: "Autentificare",
+            callback: () => {
+                DestroyCurrent();
+                Router.RenderComponent(<AuthPage />);
             }
-        });
+        }], 1);
     });
 
     on("SessionCreated", () => {

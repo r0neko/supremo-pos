@@ -1,6 +1,7 @@
 import { Component, Fragment, createRef } from "react";
 import API from "../../../API";
 import Button from "../../../Button/Button";
+import LocaleManager from "../../../Locale/LocaleManager";
 
 import PopupManager from "../../../PopupManager";
 
@@ -31,24 +32,24 @@ class BackOfficeAddProduct extends Component {
 
     render() {
         return <Fragment>
-            <h1>Înregistrare Produs</h1>
+            <h1>{LocaleManager.GetString("config.products.addProduct")}</h1>
             <div className="mb-3 mt-3">
-                <label class="form-label">Nume Produs:</label>
+                <label class="form-label">{LocaleManager.GetString("general.name")}:</label>
                 <input type="text" class="form-control" ref={this.product_name} />
             </div>
             <div className="mb-3">
-                <label class="form-label">Preț:</label>
+                <label class="form-label">{LocaleManager.GetString("general.price")}:</label>
                 <input type="text" class="form-control" ref={this.price} />
             </div>
             <div className="mb-3">
-                <label class="form-label">Cod Bare</label>
+                <label class="form-label">{LocaleManager.GetString("general.barcode")}</label>
                 <input type="text" class="form-control" ref={this.barcode} />
             </div>
             <div className="mb-3">
-                <label class="form-label">PLU(optional)</label>
+                <label class="form-label">{LocaleManager.GetString("general.plu")}({LocaleManager.GetString("general.optional")})</label>
                 <input type="text" class="form-control" ref={this.plu} />
             </div>
-            <Button onClick={this.add_product.bind(this)}>Adaugare</Button>
+            <Button onClick={this.add_product.bind(this)}>{LocaleManager.GetString("general.add")}</Button>
         </Fragment>
     }
 }

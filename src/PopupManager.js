@@ -7,6 +7,9 @@ import SoundManager from "./SoundManager";
 import Error from "./Assets/sounds/error.wav";
 import Info from "./Assets/sounds/info.wav";
 
+import ElectronManager from './ElectronManager';
+import LocaleManager from "./Locale/LocaleManager";
+
 let queue = [];
 
 let popupManagerInstance = null;
@@ -22,12 +25,14 @@ class PopupManager extends Component {
 
     static ShowPopup(title, content, buttons = [], alert = 0) {
         if (alert >= 1 && buttons.length == 0) {
-            buttons = [{ name: "OK" }];
+            buttons = [{ name: LocaleManager.GetString("general.ok") }];
         }
 
         let e = queue.push({ title, content, buttons, alert }) - 1;
         if (e == 0)
             popupManagerInstance.showPopup(queue.shift());
+            
+        popupManagerInstance.forceUpdate();
         return e;
     }
 
@@ -50,6 +55,10 @@ class PopupManager extends Component {
 
     componentDidMount() {
         popupManagerInstance = this;
+
+        if (ElectronManager.HasElectron() && ElectronManager.GetRemote() == null) {
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), "Aplicația este rulată în client-ul oficial, insa nu se poate accesa instanta client-ului. Va rugam să reporniti aplicația.", [], 1)
+        }
     }
 
     render() {

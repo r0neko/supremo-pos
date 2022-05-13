@@ -1,69 +1,80 @@
 .pos-keypad-button {
-    border: 1px white solid;
-    color: white;
-    background-color: #00B0F0;
+  border: 1px white solid;
+  color: white;
+  background-color: #00b0f0;
 
-    text-align: center;
-    text-decoration: none;
-    display: inline;
-    font-size: 40px;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
 
-    width: 80px;
-    height: 80px;
+  display: inline-block;
+  font-size: 35px;
 
-    margin-right: 5px;
-    margin-bottom: 5px;
+  width: 80px;
+  height: 80px;
 
-    transition: background-color 0.05s;
+  margin-right: 1px;
+  margin-bottom: 1px;
+
+  transition: background-color 0.05s;
+}
+
+.pos-keypad-button.smaller {
+    font-size: 20px;
 }
 
 .pos-keypad-button.end {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .pos-keypad-button.double {
-    width: 160px;
-    height: 160px;
+  width: 160px;
+  height: 160px;
+}
+
+.pos-keypad-button.double-with-margin {
+  width: 161px;
+  height: 161px;
 }
 
 .pos-keypad-button.double-long {
-    width: 160px;
+  width: 160px;
 }
 
 .pos-keypad-button:disabled {
-    background-color: #979797 !important;
-    cursor: not-allowed;
+  background-color: #979797 !important;
+  cursor: not-allowed;
 }
 
 .pos-keypad-button:hover {
-    background-color: #37c0f1;
-    cursor: pointer;
+  background-color: #37c0f1;
+  cursor: pointer;
 }
 
 .pos-keypad-button.active {
-    background-color: #0378a3;
+  background-color: #0378a3;
 }
 
 .pos-keypad-button:active {
-    background-color: #0378a3;
+  background-color: #0378a3;
 }
 
 .pos-keypad-button.pos-success {
-    background-color:#1aad01;
-    color: white;
+  background-color: #1aad01;
+  color: white;
 }
 
 .pos-keypad-button.pos-success:hover {
-    background-color: #21cc03;
-    color: white;
+  background-color: #21cc03;
+  color: white;
 }
 
 .pos-keypad-button.pos-success:active {
-    background-color: #1cb800;
-    color: white;
+  background-color: #1cb800;
+  color: white;
 }
 
 .pos-float-right {
-    margin-right: 0;
-    margin-left: auto;
+  margin-right: 0;
+  margin-left: auto;
 }

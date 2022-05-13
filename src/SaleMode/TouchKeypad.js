@@ -55,7 +55,7 @@ class TouchKeypad extends Component {
     }
 
     renderButton(id, name = id, end = false, doubleLong = false, active = true) {
-        return <button key={id} className={"pos-keypad-button" + (end ? " end" : "") + (doubleLong ? " double-long" : "") + (active ? " active" : "")} onClick={this.buttonCallback.bind(this, id)}>{name}</button>;
+        return <button key={id} className={"pos-keypad-button" + (end ? " end" : "") + (doubleLong ? " double-long" : "") + (active ? " active" : "") + (name.length >= 4 ? " smaller" : "")} onClick={this.buttonCallback.bind(this, id)}>{name}</button>;
     }
 
     genKeys() {

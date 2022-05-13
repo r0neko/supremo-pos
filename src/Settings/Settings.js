@@ -14,13 +14,18 @@ import System from "./pages/System";
 import BackOffice from "./pages/BackOffice";
 import Server from "./pages/Server";
 import Debug from "./pages/Debug";
+import ExtDisplay from "./pages/ExtDisplay";
+import FiscalPrinter from "./pages/FiscalPrinter";
+import LocaleManager from "../Locale/LocaleManager";
 
 const menu_items = [
-    {name: "Server", render: <Server />},
-    {name: "Produse", render: <BackOffice />},
-    {name: "Dezvoltare", render: <Debug />},
-    {name: "Sistem", render: <System />},
-    {name: "Ieșire", onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
+    {name: LocaleManager.GetString("config.section.server"), render: <Server />},
+    {name: LocaleManager.GetString("config.section.products"), render: <BackOffice />},
+    {name: LocaleManager.GetString("config.section.debug"), render: <Debug />},
+    {name: LocaleManager.GetString("config.section.system"), render: <System />},
+    {name: LocaleManager.GetString("config.section.externalDisplay"), render: <ExtDisplay />},
+    {name: LocaleManager.GetString("config.section.fiscalPrinter"), render: <FiscalPrinter />},
+    {name: LocaleManager.GetString("general.exit"), onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
 ];
 
 class Settings extends Component {
@@ -45,11 +50,11 @@ class Settings extends Component {
         return <div className="pos-sale-container">
             <TopBar />
             <div className="pos-content-container">
-                <h1>Configurare Sistem</h1>
+                <h1>{LocaleManager.GetString("config.configSystem")}</h1>
                 <br />
                 <div class="d-flex align-items-start">
                     <div class="nav flex-column nav-pills me-3">
-                        {menu_items.map((item, index) => <Button active={this.state.selectedElement == index} onClick={this.selectElement.bind(this, index)}>{item.name}</Button>)}
+                        {menu_items.map((item, index) => <Button active={this.state.selectedElement == index} onClick={this.selectElement.bind(this, index)} key={index}>{item.name}</Button>)}
                     </div>
                     <div class="tab-content" style={{width: "100%", height: "100%", backgroundColor: "white", padding: "10px"}}>
                         {menu_items.find((item, index) => index == this.state.selectedElement).render || ""}
