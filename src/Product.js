@@ -70,6 +70,10 @@ class Product {
     getPriceWithVATSingular() {
         return this.getPriceSingular() + this.getVATSingular();
     }
+
+    getPriceWithoutVATSingular() {
+        return this.getPriceSingular();
+    }
 }
 
 export default Product;

@@ -1,4 +1,5 @@
 import { Component } from "react";
+import ConfigManager from "./ConfigManager";
 
 let s = null;
 
@@ -23,6 +24,11 @@ class Router extends Component {
         }
 
         if(s) setCallback(s);
+
+        ConfigManager.language.on("update", () => {
+            console.log("Language updated");
+            this.forceUpdate();
+        });
     }
 
     render() {

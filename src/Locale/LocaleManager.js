@@ -2,14 +2,26 @@ import Romanian from "./ro.json";
 import English from "./en.json";
 import Thai from "./th.json";
 
-let lang = Romanian;
+import ConfigManager from "../ConfigManager";
+
+const all_languages = {
+    "ro": Romanian,
+    "en": English,
+    "th": Thai
+}
+
+function GetLanguageName(lang) {
+    return all_languages[lang].nativeName || all_languages[lang].name;
+}
 
 function GetString(str, ar = {})
 {
-    if(lang == null) return str;
+    let current_language = all_languages[ConfigManager.language.value];
+
+    if(current_language == null) return str;
 
     let a = str.split(".");
-    let target = lang.strings[a[0]];
+    let target = current_language.strings[a[0]];
 
     if(target == null) return str;
 
@@ -28,6 +40,12 @@ function GetString(str, ar = {})
     return target;
 }
 
+function GetLanguages() {
+    return Object.keys(all_languages).map(l => ({id: l, name: GetLanguageName(l)}));
+}
+
 export default {
-    GetString
+    GetString,
+    GetLanguages,
+    GetLanguageName
 }

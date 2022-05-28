@@ -23,10 +23,15 @@ class Receipt {
     }
 
     pay(method, amount) {
-        this.payment.push({
-            method,
-            amount
-        })
+        let m = this.payment.find(x => x.method == method);
+
+        if(!m)
+            this.payment.push({
+                method,
+                amount
+            })
+        else
+            m.amount += amount;
     }
 
     addProduct(product) {

@@ -40,7 +40,7 @@ class ProductList extends Component {
                         <div className="product-list__item__name">{product.name}</div>
                     </div>
                     <div className="col-3">
-                        <div className="product-list__item__price">{product.price.toFixed(2)} LEI</div>
+                        <div className="product-list__item__price">{product.getPriceWithVAT().toFixed(2)} LEI</div>
                         <div className="product-list__item__price">x{product.quantity}</div>
                         {product.void ? <div className="product-list__item__void">ANULAT</div> : null}
                     </div>

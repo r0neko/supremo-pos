@@ -3,6 +3,8 @@ import TopBar from "../SaleMode/TopBar"
 import "../SaleMode/styles/SaleMode.css"
 import "../styles/design.css"
 
+import ConfigManager from "../ConfigManager"
+
 import Button from "../Button/Button";
 import Router from "../Router";
 import SessionManager from "../SessionManager";
@@ -18,16 +20,6 @@ import ExtDisplay from "./pages/ExtDisplay";
 import FiscalPrinter from "./pages/FiscalPrinter";
 import LocaleManager from "../Locale/LocaleManager";
 
-const menu_items = [
-    {name: LocaleManager.GetString("config.section.server"), render: <Server />},
-    {name: LocaleManager.GetString("config.section.products"), render: <BackOffice />},
-    {name: LocaleManager.GetString("config.section.debug"), render: <Debug />},
-    {name: LocaleManager.GetString("config.section.system"), render: <System />},
-    {name: LocaleManager.GetString("config.section.externalDisplay"), render: <ExtDisplay />},
-    {name: LocaleManager.GetString("config.section.fiscalPrinter"), render: <FiscalPrinter />},
-    {name: LocaleManager.GetString("general.exit"), onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
-];
-
 class Settings extends Component {
     constructor() {
         super();
@@ -38,6 +30,8 @@ class Settings extends Component {
     }
 
     selectElement(index) {
+        let menu_items = this.getMenuItems();
+
         if(menu_items[index].onClick != null)
             menu_items[index].onClick();
 
@@ -46,7 +40,29 @@ class Settings extends Component {
         });
     }
 
+    getMenuItems() {
+        return [
+            {name: LocaleManager.GetString("config.section.server"), render: <Server />},
+            {name: LocaleManager.GetString("config.section.products"), render: <BackOffice />},
+            {name: LocaleManager.GetString("config.section.debug"), render: <Debug />},
+            {name: LocaleManager.GetString("config.section.system"), render: <System />},
+            {name: LocaleManager.GetString("config.section.externalDisplay"), render: <ExtDisplay />},
+            {name: LocaleManager.GetString("config.section.fiscalPrinter"), render: <FiscalPrinter />},
+            {name: LocaleManager.GetString("general.exit"), onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
+        ];
+    }
+
+    componentDidMount() {
+        ConfigManager.language.on("update", this.forceUpdate.bind(this, null));
+    }
+
+    componentWillUnmount() {
+        ConfigManager.language.off("update", this.forceUpdate.bind(this, null));
+    }
+
     render() {
+        let menu_items = this.getMenuItems();
+
         return <div className="pos-sale-container">
             <TopBar />
             <div className="pos-content-container">

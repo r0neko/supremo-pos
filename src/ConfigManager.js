@@ -3,6 +3,7 @@ import ConfigEntry from "./ConfigEntry"
 const config = {
     endpoint: new ConfigEntry("endpoint", "http://vcs.r0neko.me:1282"),
     show_display: new ConfigEntry("show_display", true),
+    language: new ConfigEntry("language", "en"),
     show_debug_stats: new ConfigEntry("show_debug_stats", true),
     demo_mode: new ConfigEntry("demo_mode", false),
     touch_beep: new ConfigEntry("touch_beep", true),

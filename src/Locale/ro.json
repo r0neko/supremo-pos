@@ -17,11 +17,12 @@
             "pleaseWait": "Vă rugăm așteptați...",
             "yes": "Da",
             "no": "Nu",
-            "ok": "Ok",
+            "ok": "OK",
             "info": "Informatie",
             "error": "Eroare",
             "exit": "Ieșire",
             "cancel": "Anulare",
+            "voidProduct": "Anul. produs",
             "add": "Adăugare",
             "save": "Salvare",
             "edit": "Editare",
@@ -71,6 +72,8 @@
             },
             "width": "Lățime",
             "height": "Înălțime",
+            "power": "Alimentare",
+            "language": "Limbă",
             "refresh": "Reîmprospătare",
             "bitRate": "Viteză de transmisie",
             "testPrint": "Testare imprimare",
@@ -92,7 +95,8 @@
             "username": "Nume de utilizator",
             "password": "Parolă",
             "canScan": "Puteți folosi scanner-ul pentru autentificare.",
-            "readingData": "Se citesc datele de autentificare..."
+            "readingData": "Se citesc datele de autentificare...",
+            "notAuthenticated": "Ne-autentificat"
         },
         "menu": {
             "mainMenu": "Meniu principal",
@@ -152,6 +156,9 @@
                 "vat": "TVA",
                 "vatType": "TVA %type%",
                 "exemptFromVAT": "scutit de TVA"
+            },
+            "system": {
+                "reboot": "Repornire Sistem"
             }
         },
         "paymentMethods": {

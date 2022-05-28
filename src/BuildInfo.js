@@ -1,7 +1,7 @@
 const Build = {
     Major: 2,
-    Minor: 66,
-    Patch: 78
+    Minor: 73,
+    Patch: 84
 };
 
 function IsProduction() {

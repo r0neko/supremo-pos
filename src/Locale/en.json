@@ -11,15 +11,110 @@
             "noSession": "no session",
             "failedPings": "Failed pings"
         },
+        "config": {
+            "configSystem": "System Configuration",
+            "configure": "Configuration",
+            "section": {
+                "server": "Server",
+                "products": "Products",
+                "debug": "Debug",
+                "system": "System",
+                "externalDisplay": "External Display",
+                "fiscalPrinter": "Fiscal Printer"
+            },
+            "products": {
+                "addProduct": "Înregistrare Produs",
+                "productName": "Nume Produs",
+                "editingProduct": "Editare Produs #%id%",
+                "searchProduct": "Cautare Produs"
+            },
+            "server": {
+                "connection": "Connection",
+                "endpoint": "Endpoint",
+                "changeEndpoint": "Change Endpoint"
+            },
+            "vat": {
+                "quotation": "TVA quotation",
+                "vat": "VAT",
+                "vatType": "VAT %type%",
+                "exemptFromVAT": "exempt from VAT"
+            },
+            "system": {
+                "reboot": "Reboot the system"
+            }
+        },
         "general": {
             "evaluationBuild": "For evaluation purposes.",
             "build": "Build",
             "pleaseWait": "Please wait...",
             "yes": "Yes",
             "no": "No",
+            "ok": "OK",
+            "voidProduct": "Void product",
             "info": "Information",
+            "error": "Error",
             "exit": "Exit",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "add": "Add",
+            "save": "Save",
+            "edit": "Edit",
+            "power": "Power",
+            "language": "Language",
+            "search": "Search",
+            "name": "Name",
+            "description": "Description",
+            "price": "Price",
+            "type": "Type",
+            "barcode": "Barcode",
+            "quantity": "Quantity",
+            "status": "Status",
+            "driver": "Driver",
+            "plu": "PLU",
+            "port": "Port",
+            "optional": "optional",
+            "width": "Width",
+            "height": "Height",
+            "refresh": "Refresh",
+            "bitRate": "Transmission Speed",
+            "testPrint": "Test Print",
+            "disconnect": "Disconnect",
+            "exitFromApp": "Exit SupremoPOS",
+            "message": {
+                "notImplemented": "This function was not implemented! We will try to implement it as soon as possible!",
+                "notRunningInClient": "SupremoPOS is not running under the native application."
+            },
+            "reduced": {
+                "feminine": "reduced",
+                "masculine": "reduced"
+            },
+            "included": {
+                "feminine": "included",
+                "masculine": "included"
+            },
+            "normal": {
+                "feminine": "normal",
+                "masculine": "normal"
+            },
+            "default": {
+                "feminine": "default",
+                "masculine": "default"
+            },
+            "disabled": {
+                "feminine": "disabled",
+                "masculine": "disabled"
+            },
+            "disconnected": {
+                "feminine": "disconnected",
+                "masculine": "disconnected"
+            },
+            "enabled": {
+                "feminine": "enabled",
+                "masculine": "enabled"
+            },
+            "connected": {
+                "feminine": "connected",
+                "masculine": "connected"
+            }
         },
         "auth": {
             "text": "Authentication",
@@ -32,14 +127,20 @@
             "username": "Username",
             "password": "Password",
             "canScan": "You can use the scanner in order to connect.",
-            "readingData": "Reading authentication data..."
+            "readingData": "Reading authentication data...",
+            "notAuthenticated": "Not authenticated"
         },
         "menu": {
             "mainMenu": "Main menu",
             "welcomeText": "Welcome, %name%(%id%)",
             "fiscalReports": "Fiscal reports",
             "configureSystem": "System Configuration",
-            "promptSelect": "Select a mode of operation to start the session."
+            "promptSelect": "Select a mode of operation to start the session.",
+            "message": {
+                "disconnectQuestion": "Are you sure you want to disconnect?",
+                "exitQuestion": "Are you sure you want to exit SupremoPOS?"
+            },
+            "externalText": "Hello!"
         },
         "sale": {
             "saleMode": "Sale mode",
@@ -50,8 +151,13 @@
             "nextClientPrompt": "Next Customer",
             "amountDue": "Due",
             "closeReceipt": "Close Receipt",
-            "messages": {
-                "sellingExit": "This sales session hasn't been closed! If you want to exit the application, please close the current sales session!"
+            "message": {
+                "sellingExit": "This sales session hasn't been closed! If you want to exit the application, please close the current sales session!",
+                "searchingPLU": "Looking for '%plu%' article...",
+                "pluNotFound": "The '%plu%' article does not exist!",
+                "searchError": "An unknown error has occured while searching for this product! Please try again later!\n%error%",
+                "sessionCreationFail": "Couldn't create a sale session!",
+                "closeReceiptOnSaleMessage": "The receipt can't be closed! One or more products were not paid!"
             }
         },
         "paymentMethods": {

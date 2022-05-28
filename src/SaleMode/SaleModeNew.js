@@ -105,6 +105,8 @@ class SaleMode extends Component {
     }
 
     setMultiplier(m) {
+        if(isNaN(m)) return this.setMultiplier(1);
+
         this.multiplier = m;
         this.qty_txt.current.value = "x" + this.multiplier;
     }
@@ -151,6 +153,7 @@ class SaleMode extends Component {
     }
 
     processPLU(plu) {
+        if(plu.length < 1 || plu == "" || plu == " ") return;
         if (this.isSearching) return;
 
         let wait_popup = PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("sale.message.searchingPLU", { plu }));
@@ -218,6 +221,11 @@ class SaleMode extends Component {
         if (this.saleSession)
             await API.VoidProductInSaleSession(this.saleSession, this.prodList.current.getSelectedProduct());
 
+        if (FPManager.GetFP() != null) {
+            let p = this.prodList.current.getSelectedProduct();
+            await FPManager.GetFP().sellProduct(p.name, p.getPriceWithVATSingular(), -1);
+        }
+        
         this.currentReceipt.voidProduct(this.prodList.current.getSelectedProduct());
         this.prodList.current.updateReceipt(this.currentReceipt);
 
@@ -227,7 +235,7 @@ class SaleMode extends Component {
     async closeReceipt() {
         if (!this.currentReceipt) return;
 
-        if (this.currentReceipt.paid == 0) {
+        if (this.currentReceipt.subtotal > 0) {
             PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("sale.message.closeReceiptOnSaleMessage"), [], 1);
             return;
         }
@@ -284,16 +292,18 @@ class SaleMode extends Component {
 
     cashPayment() {
         if (!this.currentReceipt) return;
+        if(isNaN(parseFloat(this.plu_txt.current.value))) return;
 
-        this.currentReceipt.pay("cash", 1);
+        this.currentReceipt.pay("cash", parseFloat(this.plu_txt.current.value.replace(",", ".")));
         this.displayUpdate(2);
 
+        this.plu_txt.current.value = "";
         this.forceUpdate();
     }
 
     exitSale() {
         if (this.currentReceipt)
-            return PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("sale.messages.sellingExit"), [], 2);
+            return PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("sale.message.sellingExit"), [], 2);
 
         Router.RenderComponent(<MenuPage />);
     }
@@ -307,7 +317,7 @@ class SaleMode extends Component {
             >
                 <div className="row">
                     <div className="col">
-                        <div className="product-list__item__name">{method.method}</div>
+                        <div className="product-list__item__name">{LocaleManager.GetString("paymentMethods." + method.method)}</div>
                     </div>
                     <div className="col-3">
                         <div className="product-list__item__price">{method.amount.toFixed(2)} LEI</div>

@@ -4,6 +4,7 @@ import {
 import "./styles/SaleMode.css"
 import Logo from "../Assets/SPOSLogo.png";
 import SessionManager from "../SessionManager";
+import LocaleManager from "../Locale/LocaleManager";
 
 class SaleTopBar extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class SaleTopBar extends Component {
                     {this.props.title ? this.props.title + " – " : ""}{this.state.currentDate}
                 </div>
                 <div className="pos-account">
-                    {SessionManager.GetCurrentSession() == null ? "Ne-autentificat" : SessionManager.GetCurrentSession().user.name}
+                    {SessionManager.GetCurrentSession() == null ? LocaleManager.GetString("auth.notAuthenticated") : SessionManager.GetCurrentSession().user.name}
                 </div>
             </div>
     }
