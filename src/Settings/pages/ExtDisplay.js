@@ -44,14 +44,14 @@ class ExtDisplay extends Component {
     }
 
     refreshSerialPorts() {
-        let pid = PopupManager.ShowPopup("", "Se enumeră dispozitivele seriale conectate... vă rugăm așteptați!", [], 0);
+        let pid = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("config.serial.lookingForDevices"), [], 0);
 
         SystemManager.getSerialPorts().then((ports) => {
             PopupManager.ClosePopup(pid);
             this.setState({ serialPorts: ports, selExtDispPort: this.state.serialPorts.findIndex((port) => port.path == ConfigManager.externalDisplay.value.port) });
         }).catch((err) => {
             PopupManager.ClosePopup(pid);
-            PopupManager.ShowPopup("Eroare", "A apărut o eroare la enumerarea dispozitivelor de tip serial!\n" + err, [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("config.serial.errorLookingForDevices", { err }), [], 1);
         });
     }
 
@@ -60,14 +60,14 @@ class ExtDisplay extends Component {
             this.state.selExtDispPort = 0;
 
         if (extDispDrivers[this.state.extDispDriver].driver != null && ExtDisplayManager.GetDisplay() != null) {
-            PopupManager.ShowPopup("Informație", "Ecranul extern este deja în funcțiune! Doriți să îl deconectați înainte să salvați modificările?", [
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.externalDisplay.messages.promptBeforeDisconnect"), [
                 {
-                    name: "Da", callback: (() => {
+                    name: LocaleManager.GetString("general.yes"), callback: (() => {
                         ExtDisplayManager.Destroy();
                         this.saveExtScreenSettings();
                     }).bind(this)
                 },
-                { name: "Nu" }
+                { name: LocaleManager.GetString("general.no") }
             ], 2);
 
             return;
@@ -82,25 +82,25 @@ class ExtDisplay extends Component {
             ConfigManager.externalDisplay.value.size.x = this.state.screenWidth;
             ConfigManager.externalDisplay.value.size.y = this.state.screenHeight;
 
-            let pid = PopupManager.ShowPopup("", "Se conectează la ecranul extern... vă rugăm așteptați!", [], 0);
+            let pid = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("config.externalDisplay.messages.connecting"), [], 0);
 
             ExtDisplayManager.Init().then(() => {
                 PopupManager.ClosePopup(pid);
-                PopupManager.ShowPopup("Informație", "Ecranul extern a fost conectat cu succes!", [], 1);
+                PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.externalDisplay.messages.connected"), [], 1);
                 this.forceUpdate();
             })
         } else {
             if (ExtDisplayManager.GetDisplay() != null)
                 await ExtDisplayManager.Destroy();
-            PopupManager.ShowPopup("Informație", "Ecranul extern a fost dezactivat!", [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.externalDisplay.messages.disabled"), [], 1);
             this.forceUpdate();
         }
     }
 
     render() {
-        if(!ElectronManager.HasElectron()) {
+        if (!ElectronManager.HasElectron()) {
             return <Fragment>
-                <h1>Va rugam sa folositi client-ul pentru aceasta functie!</h1>
+                <h1>{LocaleManager.GetString("config.useClient")}</h1>
             </Fragment>;
         }
 

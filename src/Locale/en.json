@@ -9,11 +9,19 @@
             "sessionToken": "Session Token",
             "ping": "Ping",
             "noSession": "no session",
-            "failedPings": "Failed pings"
+            "failedPings": "Failed pings",
+            "debugStats": "Debug Stats",
+            "demoMode": "Demo Mode",
+            "touchBeep": "Touch Beep",
+            "force1024x768": "Force 1024x768",
+            "disableKiosk": "Disable Kiosk",
+            "enableKiosk": "Enable Kiosk",
+            "copyHwidToClipboard": "Copy HWID to Clipboard"
         },
         "config": {
             "configSystem": "System Configuration",
             "configure": "Configuration",
+            "useClient": "Please use the client for this feature!",
             "section": {
                 "server": "Server",
                 "products": "Products",
@@ -24,15 +32,25 @@
                 "systemInfo": "System Information"
             },
             "products": {
-                "addProduct": "Înregistrare Produs",
-                "productName": "Nume Produs",
-                "editingProduct": "Editare Produs #%id%",
-                "searchProduct": "Cautare Produs"
+                "addProduct": "Add a product",
+                "productName": "Product Name",
+                "editingProduct": "Edit Product #%id%",
+                "searchProduct": "Search Product",
+                "messages": {
+                    "modifyingProduct": "Saving the changes of the product...",
+                    "addingProduct": "Adding the product...",
+                    "productModifiedSuccessfully": "Product modified successfully!",
+                    "productAddedSuccessfululy": "Product saved successfully into the database!"
+                }
             },
             "server": {
                 "connection": "Connection",
                 "endpoint": "Endpoint",
-                "changeEndpoint": "Change Endpoint"
+                "changeEndpoint": "Change Endpoint",
+                "messages": {
+                    "promptBeforeDisconnect": "To change the endpoint, you have to firstly disconnect. Would you want to disconnect?",
+                    "endpointChanged": "Endpoint changed successfully! You need to re-authenticate!"
+                }
             },
             "vat": {
                 "quotation": "TVA quotation",
@@ -41,11 +59,40 @@
                 "exemptFromVAT": "exempt from VAT"
             },
             "system": {
-                "reboot": "Reboot the system"
+                "reboot": "Reboot the system",
+                "messages": {
+                    "reboot": "Are you sure you want to reboot the system?",
+                    "rebooting": "The system is restarting...",
+                    "rebootingExternal": "Rebooting...",
+                    "errorRebooting": "An error has occured while rebooting the system!\n%error%"
+                }
             },
             "systemInfo": {
                 "os": "Operating System: %os%",
                 "deviceId": "Device ID: %deviceId%"
+            },
+            "serial": {
+                "lookingForDevices": "Enumerating all connected serial devices... Please wait!",
+                "errorLookingForDevices": "An unknown error has occured while enumerating all connected serial devices!\n%err%"
+            },
+            "externalDisplay": {
+                "messages": {
+                    "promptBeforeDisconnect": "The external display is already in use! Would you like to disconnect before saving the changes?",
+                    "connecting": "Connecting to the external display... Please wait!",
+                    "connected": "The external display was connected succesfully!",
+                    "disabled": "The external display was disabled!",
+                    "promptInitNotAllowed": "Unable to activate external display. It is necessary to run the official application!"
+                }
+            },
+            "fiscalPrinter": {
+                "messages": {
+                    "promptBeforeDisconnect": "The fiscal printer is already in use! Would you like to disconnect before saving the changes?",
+                    "connecting": "Connecting to the fiscal printer... Please wait!",
+                    "connected": "The fiscal printer was connected succesfully!",
+                    "disabled": "The fiscal printer was disabled!",
+                    "promptInitNotAllowed": "Cannot connect to fiscal printer. It is necessary to run the official application!",
+                    "printingTestReceipt": "Printing a test receipt... Please wait!"
+                }
             }
         },
         "general": {
@@ -57,6 +104,7 @@
             "no": "No",
             "ok": "OK",
             "voidProduct": "Void product",
+            "voided": "Voided",
             "info": "Information",
             "error": "Error",
             "exit": "Exit",
@@ -91,6 +139,10 @@
                 "notImplemented": "This function was not implemented! We will try to implement it as soon as possible!",
                 "notRunningInClient": "SupremoPOS is not running under the native application."
             },
+            "enable": "Enable",
+            "disable": "Disable",
+            "show": "Show",
+            "hide": "Hide",
             "reduced": {
                 "feminine": "reduced",
                 "masculine": "reduced"
@@ -129,9 +181,20 @@
             "connect": "Connect",
             "inProgress": "Authentication in progress...",
             "prompt": "Please log in to start the session!",
-            "errors": {
-                "wrongCreds": "The username and/or password are wrong. Please try again."
+            "error": {
+                "wrongCreds": "The username and/or password are wrong. Please try again.",
+                "unallocatedDevice": "This device was not allocated for this service!",
+                "banned": "This terminal was banned!",
+                "unknown": "An unknown error has occured while authenticating!",
+                "noConnection": "Failed to connect to the server!"
             },
+            "messages": {
+                "sessionExpired": "The session has expired! Please log in again!",
+                "sessionExpiredTitle": "Session expired",
+                "connectionLost": "Lost connection to server! Please check if there is an active internet connection.\nTrying to connect again..."
+            },
+            "contactAdmin": "Please contact the system administrator!",
+            "communicateErrCode": "Communicate the following error code: #%errCode%",
             "username": "Username",
             "password": "Password",
             "canScan": "You can use the scanner in order to connect.",

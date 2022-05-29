@@ -1,13 +1,11 @@
 import Romanian from "./ro.json";
 import English from "./en.json";
-import Thai from "./th.json";
 
 import ConfigManager from "../ConfigManager";
 
 const all_languages = {
     "ro": Romanian,
-    "en": English,
-    "th": Thai
+    "en": English
 }
 
 function GetLanguageName(lang) {

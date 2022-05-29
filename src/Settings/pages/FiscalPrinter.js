@@ -45,14 +45,14 @@ class ExtDisplay extends Component {
     }
 
     refreshSerialPorts() {
-        let pid = PopupManager.ShowPopup("", "Se enumeră dispozitivele seriale conectate... vă rugăm așteptați!", [], 0);
+        let pid = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("config.serial.lookingForDevices"), [], 0);
 
         SystemManager.getSerialPorts().then((ports) => {
             PopupManager.ClosePopup(pid);
             this.setState({ serialPorts: ports, selFPPort: this.state.serialPorts.findIndex((port) => port.path == ConfigManager.fiscalPrinter.value.port) });
         }).catch((err) => {
             PopupManager.ClosePopup(pid);
-            PopupManager.ShowPopup("Eroare", "A apărut o eroare la enumerarea dispozitivelor de tip serial!\n" + err, [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("config.serial.errorLookingForDevices", { err }), [], 1);
         });
     }
 
@@ -60,7 +60,7 @@ class ExtDisplay extends Component {
         if (FPManager.GetFP() == null)
             return;
 
-        let pid = PopupManager.ShowPopup("", "Se tipareste bon-ul de test... vă rugăm așteptați!", [], 0);
+        let pid = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("config.fiscalPrinter.messages.printingTestReceipt"), [], 0);
 
         await FPManager.TestReceipt();
 
@@ -72,14 +72,14 @@ class ExtDisplay extends Component {
             this.state.selFPPort = 0;
 
         if (fpDrivers[this.state.fpDriver].driver != null && FPManager.GetFP() != null) {
-            PopupManager.ShowPopup("Informație", "Imprimanta fiscala este deja în funcțiune! Doriți să o deconectați înainte să salvați modificările?", [
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.fiscalPrinter.messages.promptBeforeDisconnect"), [
                 {
-                    name: "Da", callback: (() => {
+                    name: LocaleManager.GetString("general.yes"), callback: (() => {
                         FPManager.Destroy();
                         this.saveFPSettings();
                     }).bind(this)
                 },
-                { name: "Nu" }
+                { name: LocaleManager.GetString("general.no") }
             ], 2);
 
             return;
@@ -94,17 +94,17 @@ class ExtDisplay extends Component {
             ConfigManager.fiscalPrinter.value.op_user = fpDrivers[this.state.fpDriver].operator ? this.state.username : "";
             ConfigManager.fiscalPrinter.value.op_passwd = fpDrivers[this.state.fpDriver].operator ? this.state.password : "";
 
-            let pid = PopupManager.ShowPopup("", "Se conectează la imprimanta fiscală... vă rugăm așteptați!", [], 0);
+            let pid = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("config.fiscalPrinter.messages.connecting"), [], 0);
 
             FPManager.Init().then(() => {
                 PopupManager.ClosePopup(pid);
-                PopupManager.ShowPopup("Informație", "Imprimanta fiscală a fost conectată cu succes!", [], 1);
+                PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.fiscalPrinter.messages.connected"), [], 1);
                 this.forceUpdate();
             })
         } else {
             if (FPManager.GetFP() != null)
                 await FPManager.Destroy();
-            PopupManager.ShowPopup("Informație", "Imprimanta fiscală a fost dezactivată!", [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.fiscalPrinter.messages.disabled"), [], 1);
             this.forceUpdate();
         }
     }
@@ -112,7 +112,7 @@ class ExtDisplay extends Component {
     render() {
         if (!ElectronManager.HasElectron()) {
             return <Fragment>
-                <h1>Va rugam sa folositi client-ul pentru aceasta functie!</h1>
+                <h1>{LocaleManager.GetString("config.useClient")}</h1>
             </Fragment>;
         }
 

@@ -21,21 +21,21 @@ class Server extends Component {
 
     set_server(ep) {
         if (SessionManager.GetCurrentSession() != null) {
-            PopupManager.ShowPopup("Informație", "Pentru a schimba server-ul, trebuie sa vă deconectați. Doriți să faceți acest lucru?", [
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.server.messages.promptBeforeDisconnect"), [
                 {
-                    name: "Da",
+                    name: LocaleManager.GetString("general.yes"),
                     callback: () => {
                         SessionManager.DestroyCurrent();
                         this.set_server(ep);
                     }
                 },
-                { name: "Nu" }
+                { name: LocaleManager.GetString("general.no") }
             ], 2);
         } else {
             ConfigManager.endpoint.value = ep;
-            PopupManager.ShowPopup("Informație", "Endpoint modificat cu succes! Este necesară re-autentificarea!", [
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.server.messages.endpointChanged"), [
                 {
-                    name: "OK",
+                    name: LocaleManager.GetString("general.ok"),
                     callback: () => {
                         Router.RenderComponent(<AuthPage />)
                     }

@@ -9,7 +9,14 @@
             "sessionToken": "Token sesiune",
             "ping": "Ping",
             "noSession": "nicio sesiune",
-            "failedPings": "Ping-uri eșuate"
+            "failedPings": "Ping-uri eșuate",
+            "debugStats": "Statistici Dezvoltare",
+            "demoMode": "Mod Demonstratie",
+            "touchBeep": "Sunet la apasare",
+            "force1024x768": "Setare 1024x768",
+            "disableKiosk": "Dezactivare mod Kiosk",
+            "enableKiosk": "Activare mod Kiosk",
+            "copyHwidToClipboard": "Copiere HWID in Clipboard"
         },
         "general": {
             "evaluationBuild": "Cu scop de evaluare.",
@@ -24,6 +31,7 @@
             "exit": "Ieșire",
             "cancel": "Anulare",
             "voidProduct": "Anul. produs",
+            "voided": "Anulat",
             "add": "Adăugare",
             "save": "Salvare",
             "edit": "Editare",
@@ -41,6 +49,10 @@
             "version": "Versiune",
             "port": "Port",
             "optional": "opțional",
+            "enable": "Activare",
+            "disable": "Dezactivare",
+            "show": "Afișare",
+            "hide": "Ascundere",
             "reduced": {
                 "feminine": "redusă",
                 "masculine": "redus"
@@ -92,9 +104,20 @@
             "connect": "Conectare",
             "inProgress": "Se autentifică...",
             "prompt": "Vă rugăm să vă autentificați pentru a începe sesiunea!",
-            "errors": {
-                "wrongCreds": "Numele de utilizator sau parola sunt greșite. Vă rugăm să încercați din nou."
+            "error": {
+                "wrongCreds": "Numele de utilizator sau parola sunt greșite. Vă rugăm să încercați din nou.",
+                "unallocatedDevice": "Acest terminal nu este alocat pentru acest serviciu!",
+                "banned": "Acest terminal a fost blocat!",
+                "unknown": "O eroare neașteptată a avut loc în timpul autentificării!",
+                "noConnection": "Nu s-a putut realiza conexiunea cu server-ul!"
             },
+            "messages": {
+                "sessionExpired": "Sesiunea ta a expirat. Te rugăm să te autentifici din nou.",
+                "sessionExpiredTitle": "Sesiune expirată",
+                "connectionLost": "S-a pierdut conexiunea cu server-ul! Te rugăm să verifici daca există conexiune la internet.\nSe reîncearcă conectarea..."
+            },
+            "contactAdmin": "Vă rugăm sa contactați administrator-ul de sistem!",
+            "communicateErrCode": "Comunicati urmatorul cod de eroare: #%errCode%",
             "username": "Nume de utilizator",
             "password": "Parolă",
             "canScan": "Puteți folosi scanner-ul pentru autentificare.",
@@ -135,6 +158,7 @@
         "config": {
             "configSystem": "Configurare Sistem",
             "configure": "Configurare",
+            "useClient": "Va rugam sa folositi client-ul pentru aceasta functie!",
             "section": {
                 "server": "Server",
                 "database": "Baza de date",
@@ -149,12 +173,22 @@
                 "addProduct": "Înregistrare Produs",
                 "productName": "Nume Produs",
                 "editingProduct": "Editare Produs #%id%",
-                "searchProduct": "Cautare Produs"
+                "searchProduct": "Cautare Produs",
+                "messages": {
+                    "modifyingProduct": "Se modifică produsul...",
+                    "addingProduct": "Se adaugă produsul...",
+                    "productModifiedSuccessfully": "Produsul a fost modificat cu succes!",
+                    "productAddedSuccessfululy": "Produsul a fost adăugat cu succes în baza de date!"
+                }
             },
             "server": {
                 "connection": "Conexiune",
                 "endpoint": "Endpoint",
-                "changeEndpoint": "Schimba Endpoint"
+                "changeEndpoint": "Schimba Endpoint",
+                "messages": {
+                    "promptBeforeDisconnect": "Pentru a schimba server-ul, trebuie sa vă deconectați. Doriți să faceți acest lucru?",
+                    "endpointChanged": "Endpoint modificat cu succes! Este necesară re-autentificarea!"
+                }
             },
             "vat": {
                 "quotation": "Cote TVA",
@@ -163,11 +197,40 @@
                 "exemptFromVAT": "scutit de TVA"
             },
             "system": {
-                "reboot": "Repornire Sistem"
+                "reboot": "Repornire Sistem",
+                "messages": {
+                    "rebootConfirmation": "Sigur doriți să reporniți sistemul?",
+                    "rebooting": "Se repornește sistemul...",
+                    "rebootingExternal": "Repornire sistem...",
+                    "errorRebooting": "Eroare la repornirea sistemului!\n%error%"
+                }
             },
             "systemInfo": {
                 "os": "Sistem Operare: %os%",
                 "deviceId": "Identificator Dispozitiv: %deviceId%"
+            },
+            "serial": {
+                "lookingForDevices": "Se enumeră dispozitivele seriale conectate... vă rugăm așteptați!",
+                "errorLookingForDevices": "A apărut o eroare la enumerarea dispozitivelor de tip serial!\n%err%"
+            },
+            "externalDisplay": {
+                "messages": {
+                    "promptBeforeDisconnect": "Ecranul extern este deja în funcțiune! Doriți să îl deconectați înainte să salvați modificările?",
+                    "connecting": "Se conectează la ecranul extern... vă rugăm așteptați!",
+                    "connected": "Ecranul extern a fost conectat cu succes!",
+                    "disabled": "Ecranul extern a fost dezactivat!",
+                    "promptInitNotAllowed": "Nu se poate activa ecranul extern. Este necesara rularea aplicatiei oficiale!"
+                }
+            },
+            "fiscalPrinter": {
+                "messages": {
+                    "promptBeforeDisconnect": "Imprimanta fiscala este deja în funcțiune! Doriți să o închideți înainte să salvați modificările?",
+                    "connecting": "Se conectează la imprimanta fiscala... vă rugăm așteptați!",
+                    "connected": "Imprimanta fiscala a fost conectată cu succes!",
+                    "disabled": "Imprimanta fiscala a fost dezactivată!",
+                    "promptInitNotAllowed": "Nu se poate conecta la imprimanta fiscala. Este necesara rularea aplicatiei oficiale!",
+                    "printingTestReceipt": "Se tipareste un test de bon... va rugam asteptati!"
+                }
             }
         },
         "paymentMethods": {

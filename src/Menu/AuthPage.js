@@ -30,7 +30,7 @@ class AuthPage extends Component {
 
     displayState(state = 0) {
         let d = ExtDisplayManager.GetDisplay();
-        if(d == null) return;
+        if (d == null) return;
         d.clearAll();
 
         switch (state) {
@@ -66,18 +66,23 @@ class AuthPage extends Component {
         InputManager.Disable();
     }
 
-    authByCode(code) {
-        this.authByUser("@TOKEN@", code);
-    }
+    showError(errCode) {
+        let errors = {
+            "A00": LocaleManager.GetString("auth.error.noConnection"),
+            "A01": LocaleManager.GetString("auth.error.unallocatedDevice"),
+            "A03": LocaleManager.GetString("auth.error.banned"),
+            "A04": LocaleManager.GetString("auth.error.unknown"),
+        }
 
-    authByUser(user, pass) {
-        this.displayState(1);
-        this.authPopup = PopupManager.ShowPopup(LocaleManager.GetString("auth.text"), "Autentificare in curs...");
+        let buttons =
 
-        SessionManager.Authenticate(user, pass).then((status) => {
-            PopupManager.ClosePopup(this.authPopup);
-
-            let buttons = [
+            this.authPopup = PopupManager.ShowPopup(
+                LocaleManager.GetString("general.error"),
+                <p>
+                    {errors[errCode]}<br />
+                    {LocaleManager.GetString("auth.contactAdmin")}<br /><br />
+                    {LocaleManager.GetString("auth.communicateErrCode", { errCode })}
+                </p>, [
                 {
                     name: "OK",
                     callback: () => {
@@ -86,19 +91,45 @@ class AuthPage extends Component {
                         this.displayState(0);
                     }
                 }
-            ]
+            ], 1
+            );
+    }
 
-            // TODO: traducere
+    authByCode(code) {
+        this.authByUser("@TOKEN@", code);
+    }
+
+    authByUser(user, pass) {
+        this.displayState(1);
+        this.authPopup = PopupManager.ShowPopup(LocaleManager.GetString("auth.text"), LocaleManager.GetString("auth.inProgress"));
+
+        SessionManager.Authenticate(user, pass).then((status) => {
+            PopupManager.ClosePopup(this.authPopup);
+
             if (status == 1) // incorrect user/pass
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>{LocaleManager.GetString("auth.errors.wrongCreds")}</p>, buttons, 1);
+                this.authPopup = PopupManager.ShowPopup(
+                    LocaleManager.GetString("general.error"),
+                    LocaleManager.GetString("auth.error.wrongCreds"),
+                    [
+                        {
+                            name: "OK",
+                            callback: () => {
+                                this.setState({ readingFromScanner: false, scannerData: null });
+                                this.authPopup = null;
+                                this.displayState(0);
+                            }
+                        }
+                    ],
+                    1
+                );
             else if (status == 2) // not associated with the server
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal ne-alocat pentru acest serviciu!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A01</p>, buttons, 1);
+                this.showError("A01");
             else if (status == 3) // device banned
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Terminal-ul dvs. a fost blocat!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A03</p>, buttons, 1);
+                this.showError("A03");
             else if (status == -1) // server is not reachable
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>Nu s-a putut contacta server-ul!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A00</p>, buttons, 1);
+                this.showError("A00");
             else if (status == 4) // server error
-                this.authPopup = PopupManager.ShowPopup("Eroare autentificare!", <p>O eroare neașteptată a avut loc în timpul autentificării!<br />Vă rugăm sa contactați administrator-ul de sistem!<br /><br />Comunicati urmatorul cod de eroare: #A04</p>, buttons, 1);
+                this.showError("A04");
         });
     }
 

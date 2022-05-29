@@ -374,13 +374,12 @@ class SaleMode extends Component {
                                 <ButtonDanger onClick={this.exitSale.bind(this)} style={{ "width": "100%" }}>{LocaleManager.GetString("general.exit")}</ButtonDanger>
                             </div>
                             <div className="col">
-                                <Button onClick={this.voidProduct.bind(this)} style={{ "width": "100%" }}>{LocaleManager.GetString("general.cancel")}</Button>
+                                <Button onClick={this.voidProduct.bind(this)} style={{ "width": "100%" }}>{LocaleManager.GetString("general.voidProduct")}</Button>
                             </div>
                             <div className="col">
                                 <Button onClick={this.placeholder.bind(this)} style={{ "width": "100%" }}>...</Button>
                             </div>
                         </div>
-                        <small>sale session: {this.saleSession || "none"}</small>
                     </div>
                     <div className="col">
                         <div style={{ display: "inline-flex" }}>
@@ -399,8 +398,6 @@ class SaleMode extends Component {
                                 <div className="col">
                                     <div className="pos-vert-list">
                                         {this.getPaymentSection()}
-                                        {/* <small>paid: {(this.currentReceipt ? this.currentReceipt.paid : 0).toFixed(2)}</small><br />
-                                        <small>due: {(this.currentReceipt ? this.currentReceipt.due : 0).toFixed(2)}</small><br /> */}
                                     </div>
                                 </div>
                                 <div className="col-3">

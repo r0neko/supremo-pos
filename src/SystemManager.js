@@ -4,6 +4,7 @@ import ElectronManager from "./ElectronManager";
 import ExtDisplayManager from "./ExtDisplayManager";
 
 import { SHA256 } from "sha256-js-tools";
+import LocaleManager from "./Locale/LocaleManager";
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -105,7 +106,7 @@ function getCookie(cookiename) {
 
 async function getHardwareID() {
     if (!ElectronManager.HasElectron() || ElectronManager.GetRemote() == null) {
-        if(getCookie("h") == null)
+        if (getCookie("h") == null)
             document.cookie = "h=" + SHA256.generate("" + Math.floor(Math.random() * 999999) + 1) + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
 
         return SHA256.generate("browser-" + getCookie("h"));
@@ -135,11 +136,11 @@ function SetScreenSize(width, height) {
 
 function reboot() {
     return new Promise(async (resolve, reject) => {
-        PopupManager.ShowPopup("Sistem", "Se repornește sistemul...");
+        PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.system.message.rebooting"));
 
         if (ExtDisplayManager.GetDisplay() != null) {
             await ExtDisplayManager.GetDisplay().clearAll();
-            await ExtDisplayManager.GetDisplay().print("Repornire sistem...");
+            await ExtDisplayManager.GetDisplay().print(LocaleManager.GetString("config.system.message.rebootingExternal"));
         }
 
         await sleep(1000);
@@ -154,7 +155,7 @@ function reboot() {
 
             child_process.exec(command, (error) => {
                 if (error) {
-                    PopupManager.ShowPopup("Eroare", "Eroare la repornirea sistemului! Eroare: " + error, [], 1);
+                    PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("config.system.message.errorRebooting", { error }), [], 1);
                     reject(error);
                 } else resolve();
             });

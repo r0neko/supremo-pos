@@ -6,6 +6,7 @@ import API from "./API";
 
 import MenuPage from "./Menu/MenuPage";
 import AuthPage from "./Menu/AuthPage";
+import LocaleManager from "./Locale/LocaleManager";
 
 let session = null;
 
@@ -27,7 +28,7 @@ async function Ping() {
 
         let r = await API.Ping();
 
-        if(r.success == false && r.error.code == 2)
+        if (r.success == false && r.error.code == 2)
             return call("SessionExpired");
 
         let b = Date.now();
@@ -55,8 +56,8 @@ function remove(what, id) {
 
 // session manager functions
 function DestroyCurrent() {
-    if(session == null) return;
-    
+    if (session == null) return;
+
     session.destroy();
     session = null;
 
@@ -104,8 +105,8 @@ async function Authenticate(user, password) {
 // init the session manager callbacks
 function Init() {
     on("SessionExpired", () => {
-        PopupManager.ShowPopup("Sesiune expirată", "Sesiunea ta a expirat. Te rugăm să te autentifici din nou.", [{
-            name: "Autentificare",
+        PopupManager.ShowPopup(LocaleManager.GetString("auth.messages.sessionExpiredTitle"), LocaleManager.GetString("auth.messages.sessionExpired"), [{
+            name: LocaleManager.GetString("general.ok"),
             callback: () => {
                 DestroyCurrent();
                 Router.RenderComponent(<AuthPage />);
@@ -130,8 +131,9 @@ function Init() {
 
     on("SessionPingFail", () => {
         if (failedPings > 3 && ping_msg_handle == null)
-            ping_msg_handle = PopupManager.ShowPopup("S-a pierdut conexiunea!",
-                <p>S-a pierdut conexiunea cu server-ul! Te rugăm să verifici daca există conexiune la internet.<br />Se reîncearcă conectarea...</p>
+            ping_msg_handle = PopupManager.ShowPopup(
+                LocaleManager.GetString("general.info"),
+                LocaleManager.GetString("auth.messages.connectionLost")
             );
 
         failedPings++;

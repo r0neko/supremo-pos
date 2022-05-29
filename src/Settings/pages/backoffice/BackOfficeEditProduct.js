@@ -24,11 +24,11 @@ class BackOfficeAddProduct extends Component {
     }
 
     edit_product() {
-        let p = PopupManager.ShowPopup("Informatie", "Se modifică produsul...");
+        let p = PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.products.messages.modifyingProduct"));
 
         API.ModifyProduct(this.state.product.id, this.product_name.current.value, parseFloat(this.price.current.value.replace(".", ",")), this.barcode.current.value, parseInt(this.plu.current.value)).then((status) => {
             PopupManager.ClosePopup(p);
-            PopupManager.ShowPopup("Informatie", "Produsul a fost modificat cu succes!", [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.products.messages.productModifiedSuccessfully"), [], 1);
             this.setState({ id: 0, editingProduct: false, product: null });
             this.prod_plu.current.value = "";
         });
@@ -36,7 +36,7 @@ class BackOfficeAddProduct extends Component {
 
     find_product() {
         let plu = this.prod_plu.current.value;
-        let wait_popup = PopupManager.ShowPopup("Așteptați...", `Se caută PLU '${plu}'...`);
+        let wait_popup = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), LocaleManager.GetString("sale.message.searchingPLU", { plu }));
 
         Product.findPLU(plu).then(r => {
             PopupManager.ClosePopup(wait_popup);
@@ -44,10 +44,10 @@ class BackOfficeAddProduct extends Component {
             if (r)
                 this.setState({ id: r.id, editingProduct: true, product: r });
             else
-                PopupManager.ShowPopup("Eroare", `Codul PLU '${plu}' nu există!`, [], 1);
+                PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("sale.message.pluNotFound", { plu }), [], 1);
         }).catch(e => {
             PopupManager.ClosePopup(wait_popup);
-            PopupManager.ShowPopup("Eroare", `O eroare necunoscută a avut loc în timpul căutării produsului! Vă rugăm sa încercați din nou! ${e}`, [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.error"), LocaleManager.GetString("general.error"), LocaleManager.GetString("sale.message.searchError", { error: e.message }), [], 1);
         });
     }
 
@@ -67,7 +67,7 @@ class BackOfficeAddProduct extends Component {
             </Fragment>
 
         return <Fragment>
-            <h1>{LocaleManager.GetString("config.products.editingProduct", {id: this.state.product.id})}</h1>
+            <h1>{LocaleManager.GetString("config.products.editingProduct", { id: this.state.product.id })}</h1>
             <div className="mb-3 mt-3">
                 <label class="form-label">{LocaleManager.GetString("general.name")}:</label>
                 <input type="text" class="form-control" ref={this.product_name} value={this.state.product.description} onChange={e => this.updateProdField("description", e.target.value)} />

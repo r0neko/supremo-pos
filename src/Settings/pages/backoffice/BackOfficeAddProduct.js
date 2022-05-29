@@ -16,7 +16,7 @@ class BackOfficeAddProduct extends Component {
     }
 
     add_product() {
-        let p = PopupManager.ShowPopup("Informatie", "Se adauga produsul...");
+        let p = PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.products.messages.addingProduct"));
 
         API.AddProduct(this.product_name.current.value, parseFloat(this.price.current.value.replace(".", ",")), this.barcode.current.value, parseInt(this.plu.current.value)).then((status) => {
             PopupManager.ClosePopup(p);
@@ -26,7 +26,7 @@ class BackOfficeAddProduct extends Component {
             this.plu.current.value = "";
             this.price.current.value = "";
 
-            PopupManager.ShowPopup("Informatie", "Produsul a fost adăugat cu succes în baza de date!", [], 1);
+            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.products.messages.productAddedSuccessfully"), [], 1);
         });
     }
 

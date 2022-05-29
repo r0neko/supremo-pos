@@ -26,7 +26,6 @@ class Router extends Component {
         if(s) setCallback(s);
 
         ConfigManager.language.on("update", () => {
-            console.log("Language updated");
             this.forceUpdate();
         });
     }

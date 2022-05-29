@@ -26,12 +26,12 @@ class System extends Component {
     }
 
     reboot_prompt() {
-        PopupManager.ShowPopup("Repornire", "Sunteți sigur că doriți repornirea sistemului?", [
+        PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.system.messages.rebootConfirmation"), [
             {
-                name: "Da",
+                name: LocaleManager.GetString("general.yes"),
                 callback: SystemManager.reboot
             },
-            { name: "Nu" }
+            { name: LocaleManager.GetString("general.no") }
         ], 2);
     }
 

@@ -1,5 +1,6 @@
 import ConfigManager from "./ConfigManager";
 import ElectronManager from "./ElectronManager";
+import LocaleManager from "./Locale/LocaleManager";
 import PopupManager from "./PopupManager";
 
 let fiscalPrinter = null;
@@ -9,7 +10,7 @@ async function Init() {
 
     if (cfg.enabled) {
         if (!ElectronManager.HasElectron() || ElectronManager.GetRemote() == null)
-            return PopupManager.ShowPopup("Informatie", "Nu se poate conecta la imprimanta fiscala. Este necesara rularea aplicatiei oficiale!", [], 2)
+            return PopupManager.ShowPopup(LocaleManager.GetString("general.info"), LocaleManager.GetString("config.fiscalPrinter.messages.promptInitNotAllowed"), [], 2)
 
         let fpLibrary = ElectronManager.GetRemote().require("fp.js");
         let fp = new fpLibrary[cfg.driver](cfg.port, {

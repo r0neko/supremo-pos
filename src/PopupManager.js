@@ -55,10 +55,6 @@ class PopupManager extends Component {
 
     componentDidMount() {
         popupManagerInstance = this;
-
-        if (ElectronManager.HasElectron() && ElectronManager.GetRemote() == null) {
-            PopupManager.ShowPopup(LocaleManager.GetString("general.info"), "Aplicația este rulată în client-ul oficial, insa nu se poate accesa instanta client-ului. Va rugam să reporniti aplicația.", [], 1)
-        }
     }
 
     render() {
