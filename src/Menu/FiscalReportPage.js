@@ -24,14 +24,14 @@ class FiscalReportPage extends Component {
         PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("general.message.notImplemented")}</p>, [], 1);
     }
 
-    async doDailyReport() {
+    async doDailyReport(zero = true) {
         if(FPManager.GetFP() == null)
             return PopupManager.ShowPopup(LocaleManager.GetString("general.info"), <p>{LocaleManager.GetString("fiscalReports.message.noFiscalPrinter")}</p>, [], 1);
             
         let p = PopupManager.ShowPopup(LocaleManager.GetString("general.pleaseWait"), <p>{LocaleManager.GetString("fiscalReports.message.generatingDailyReport")}</p>);
         
         try {
-            await FPManager.GetFP().performDailyReport();
+            await FPManager.GetFP().performDailyReport(zero);
             PopupManager.ClosePopup(p);
         } catch(ex) {
             PopupManager.ClosePopup(p);
@@ -52,10 +52,10 @@ class FiscalReportPage extends Component {
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <Button style={btnStyle} onClick={this.doDailyReport.bind(this)}>{LocaleManager.GetString("fiscalReports.type.daily")}</Button>
+                        <Button style={btnStyle} onClick={this.doDailyReport.bind(this, true)}>{LocaleManager.GetString("fiscalReports.type.daily")}</Button>
                     </div>
                     <div class="col">
-                        <Button style={btnStyle} onClick={this.placeholder}>{LocaleManager.GetString("fiscalReports.type.verification")}</Button>
+                        <Button style={btnStyle} onClick={this.doDailyReport.bind(this, false)}>{LocaleManager.GetString("fiscalReports.type.verification")}</Button>
                     </div>
                 </div>
             </div>
