@@ -4,6 +4,7 @@ import "./style.css";
 
 import ConfigManager from "../ConfigManager";
 import LocaleManager from "../Locale/LocaleManager";
+import BuildInfo from "../BuildInfo";
 
 let itx = null;
 
@@ -33,10 +34,16 @@ class DebugInfo extends Component {
         ConfigManager.show_debug_stats.on("update", (v) => {
             this.setState({ shown: v });
         });
+
+        ConfigManager.language.on("update", this.forceUpdate.bind(this, null));
+    }
+
+    componentWillUnmount() {
+        ConfigManager.language.off("update", this.forceUpdate.bind(this, null));
     }
 
     render() {
-        if (!this.state.shown) return null;
+        if (!this.state.shown || BuildInfo.IsProduction()) return null;
 
         return <div className="debug stats">
             <h2>{LocaleManager.GetString("debug.stats")}:</h2>

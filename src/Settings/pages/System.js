@@ -6,7 +6,7 @@ import PopupManager from "../../PopupManager";
 import ConfigManager from "../../ConfigManager";
 import LocaleManager from "../../Locale/LocaleManager";
 
-class Settings extends Component {
+class System extends Component {
     constructor() {
         super();
 
@@ -57,4 +57,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings; 
+export default System; 

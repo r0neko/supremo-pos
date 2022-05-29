@@ -20,7 +20,8 @@
                 "debug": "Debug",
                 "system": "System",
                 "externalDisplay": "External Display",
-                "fiscalPrinter": "Fiscal Printer"
+                "fiscalPrinter": "Fiscal Printer",
+                "systemInfo": "System Information"
             },
             "products": {
                 "addProduct": "Înregistrare Produs",
@@ -41,12 +42,17 @@
             },
             "system": {
                 "reboot": "Reboot the system"
+            },
+            "systemInfo": {
+                "os": "Operating System: %os%",
+                "deviceId": "Device ID: %deviceId%"
             }
         },
         "general": {
             "evaluationBuild": "For evaluation purposes.",
             "build": "Build",
             "pleaseWait": "Please wait...",
+            "back": "Back",
             "yes": "Yes",
             "no": "No",
             "ok": "OK",
@@ -70,8 +76,10 @@
             "status": "Status",
             "driver": "Driver",
             "plu": "PLU",
+            "version": "Version",
             "port": "Port",
             "optional": "optional",
+            "system": "System",
             "width": "Width",
             "height": "Height",
             "refresh": "Refresh",
@@ -136,6 +144,7 @@
             "fiscalReports": "Fiscal reports",
             "configureSystem": "System Configuration",
             "promptSelect": "Select a mode of operation to start the session.",
+            "promptSelectReportType": "Select a report type to be generated.",
             "message": {
                 "disconnectQuestion": "Are you sure you want to disconnect?",
                 "exitQuestion": "Are you sure you want to exit SupremoPOS?"
@@ -164,6 +173,18 @@
             "card": "Credit Card",
             "cash": "Cash",
             "other": "Other method"
+        },
+        "fiscalReports": {
+            "type": {
+                "daily": "Z Report",
+                "verification": "X Report"
+            },
+            "message": {
+                "generatingDailyReport": "Generating Z Report...",
+                "generatingVerificationReport": "Generating X Report...",
+                "errorGenerating": "An error has occured while generating the report!\n%error%",
+                "noFiscalPrinter": "No fiscal printer connected!"
+            }
         }
     }
 }

@@ -13,11 +13,12 @@
         },
         "general": {
             "evaluationBuild": "Cu scop de evaluare.",
-            "build": "Build",
+            "build": "Versiunea de compilare",
             "pleaseWait": "Vă rugăm așteptați...",
             "yes": "Da",
             "no": "Nu",
             "ok": "OK",
+            "back": "Inapoi",
             "info": "Informatie",
             "error": "Eroare",
             "exit": "Ieșire",
@@ -34,8 +35,10 @@
             "barcode": "Cod de bare",
             "quantity": "Cantitate",
             "status": "Stare",
+            "system": "Sistem",
             "driver": "Driver",
             "plu": "PLU",
+            "version": "Versiune",
             "port": "Port",
             "optional": "opțional",
             "reduced": {
@@ -104,6 +107,7 @@
             "fiscalReports": "Rapoarte fiscale",
             "configureSystem": "Configurare sistem",
             "promptSelect": "Selectează un mod de funcționare pentru a începe sesiunea.",
+            "promptSelectReportType": "Selectează un tip de raport fiscal pentru a-l genera.",
             "message": {
                 "disconnectQuestion": "Ești sigur că doresti să te deconectezi?",
                 "exitQuestion": "Esti sigur că dorești să ieși din SupremoPOS?"
@@ -138,7 +142,8 @@
                 "debug": "Dezvoltare",
                 "system": "Sistem",
                 "externalDisplay": "Ecran Extern",
-                "fiscalPrinter": "Imprimanta Fiscala"
+                "fiscalPrinter": "Imprimanta Fiscala",
+                "systemInfo": "Informatii Sistem"
             },
             "products": {
                 "addProduct": "Înregistrare Produs",
@@ -159,12 +164,28 @@
             },
             "system": {
                 "reboot": "Repornire Sistem"
+            },
+            "systemInfo": {
+                "os": "Sistem Operare: %os%",
+                "deviceId": "Identificator Dispozitiv: %deviceId%"
             }
         },
         "paymentMethods": {
             "card": "Card Bancar",
             "cash": "Numerar",
             "other": "Altă metodă"
+        },
+        "fiscalReports": {
+            "type": {
+                "daily": "Raport Z",
+                "verification": "Raport X"
+            },
+            "message": {
+                "generatingDailyReport": "Se generează raportul Z...",
+                "generatingVerificationReport": "Se generează raportul X...",
+                "errorGenerating": "A apărut o eroare la generarea raportului!",
+                "noFiscalPrinter": "Nu există nicio imprimantă fiscală conectată!"
+            }
         }
     }
 }

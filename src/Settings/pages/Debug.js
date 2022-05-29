@@ -46,7 +46,11 @@ class Debug extends Component {
     }
 
     setFrameless(s = false) {
-        ElectronManager.GetRemote().getCurrentWindow().setFrame(s);
+        ElectronManager.GetRemote().getCurrentWindow().setKiosk(s);
+    }
+
+    hwidToClipboard() { 
+        SystemManager.getHardwareID().then(hwid => navigator.clipboard.writeText(hwid));
     }
 
     render() {
@@ -58,6 +62,7 @@ class Debug extends Component {
             <Button onClick={this.setScreenSize.bind(this)}>Setare 1024x768</Button><br /><br />
             <Button onClick={this.setFrameless.bind(this, false)}>Mod fereastra</Button><br /><br />
             <Button onClick={this.setFrameless.bind(this, true)}>Mod fara rama</Button><br /><br />
+            <Button onClick={this.hwidToClipboard.bind(this)}>Copiere HWID in Clipboard</Button><br /><br />
         </Fragment>
     }
 }

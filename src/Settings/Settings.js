@@ -19,6 +19,7 @@ import Debug from "./pages/Debug";
 import ExtDisplay from "./pages/ExtDisplay";
 import FiscalPrinter from "./pages/FiscalPrinter";
 import LocaleManager from "../Locale/LocaleManager";
+import SysInfo from "./pages/SysInfo"
 
 class Settings extends Component {
     constructor() {
@@ -48,6 +49,7 @@ class Settings extends Component {
             {name: LocaleManager.GetString("config.section.system"), render: <System />},
             {name: LocaleManager.GetString("config.section.externalDisplay"), render: <ExtDisplay />},
             {name: LocaleManager.GetString("config.section.fiscalPrinter"), render: <FiscalPrinter />},
+            {name: LocaleManager.GetString("config.section.systemInfo"), render: <SysInfo />},
             {name: LocaleManager.GetString("general.exit"), onClick: () => Router.RenderComponent(SessionManager.GetCurrentSession() == null ? <AuthPage /> : <MenuPage />)},
         ];
     }

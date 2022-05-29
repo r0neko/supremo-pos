@@ -12,6 +12,7 @@ import Settings from "../Settings/Settings";
 
 import ElectronManager from "../ElectronManager";
 import LocaleManager from "../Locale/LocaleManager";
+import FiscalReportPage from "./FiscalReportPage";
 
 const btnStyle = {
     height: "80px",
@@ -85,7 +86,7 @@ class MenuPage extends Component {
                         <Button style={btnStyle} onClick={() => Router.RenderComponent(<SaleModeNew />)}>{LocaleManager.GetString("sale.saleMode")}</Button>
                     </div>
                     <div class="col">
-                        <Button style={btnStyle} onClick={this.placeholder}>{LocaleManager.GetString("menu.fiscalReports")}</Button>
+                        <Button style={btnStyle} onClick={() => Router.RenderComponent(<FiscalReportPage />)}>{LocaleManager.GetString("menu.fiscalReports")}</Button>
                     </div>
                     <div class="col">
                         <Button style={btnStyle} onClick={() => Router.RenderComponent(<Settings />)}>{LocaleManager.GetString("menu.configureSystem")}</Button>
