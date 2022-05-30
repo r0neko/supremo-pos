@@ -43,7 +43,7 @@ class ProductList extends Component {
                     <div className="col-3">
                         <div className="product-list__item__price">{product.getPriceWithVAT().toFixed(2)} LEI</div>
                         <div className="product-list__item__price">x{product.quantity}</div>
-                        {product.void ? <div className="product-list__item__void">{LocaleManager.GetString("general.voided").toUppercase()}</div> : null}
+                        {product.void ? <div className="product-list__item__void">{LocaleManager.GetString("general.voided").toUpperCase()}</div> : null}
                     </div>
                 </div>
             </div>;
