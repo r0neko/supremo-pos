@@ -13,6 +13,7 @@ import Router from './Router';
 import TouchFeedback from './TouchFeedback';
 import InputManager from './InputManager';
 import ExtDisplayManager from './ExtDisplayManager';
+import AspectRatio from './AspectRatio';
 
 async function onUnload() {
     await ExtDisplayManager.Destroy();
@@ -28,13 +29,14 @@ async function main() {
 
     ReactDOM.render(
         <React.StrictMode>
-            <React.Fragment>
-                <PopupManager />
-                <DebugInfo />
-                <DebugBuild />
-                {/* <DebugExtDisplay /> */}
-                <Router />
-            </React.Fragment>
+            <AspectRatio>
+                <React.Fragment>
+                    <PopupManager />
+                    <DebugInfo />
+                    <DebugBuild />
+                    <Router />
+                </React.Fragment>
+            </AspectRatio>
         </React.StrictMode>,
         document.getElementById('root')
     );

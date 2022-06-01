@@ -7,6 +7,7 @@ const config = {
     show_debug_stats: new ConfigEntry("show_debug_stats", true),
     demo_mode: new ConfigEntry("demo_mode", false),
     touch_beep: new ConfigEntry("touch_beep", true),
+    forceAspectRatio: new ConfigEntry("force_aspect_ratio", false),
     tva: new ConfigEntry("tva", {
         a: 19,
         b: 9,

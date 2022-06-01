@@ -18,9 +18,17 @@ html, body, #root {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  background-color: black;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.spos-ar4-3 {
+  width: 75%;
+  height: 100%;
+  margin: auto;
 }

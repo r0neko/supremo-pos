@@ -12,6 +12,7 @@ class System extends Component {
 
         this.state = {
             language: ConfigManager.language.value,
+            aspectRatio: ConfigManager.forceAspectRatio.value
         };
 
         this.lang = createRef();
@@ -21,8 +22,13 @@ class System extends Component {
         this.setState({ language: ConfigManager.language.value });
     }
 
+    onAspectRatioUpdate() {
+        this.setState({ aspectRatio: ConfigManager.forceAspectRatio.value });
+    }
+
     componentDidMount() {
         ConfigManager.language.on("update", this.onLanguageUpdate.bind(this));
+        ConfigManager.forceAspectRatio.on("update", this.onAspectRatioUpdate.bind(this));
     }
 
     reboot_prompt() {
@@ -39,10 +45,17 @@ class System extends Component {
         ConfigManager.language.value = this.lang.current.value;
     }
 
+    toggle43() {
+        ConfigManager.forceAspectRatio.value = !ConfigManager.forceAspectRatio.value;
+    }
+
     render() {
         return <Fragment>
             <h3>{LocaleManager.GetString("general.power")}</h3>
             <Button onClick={this.reboot_prompt}>{LocaleManager.GetString("config.system.reboot")}</Button>
+            <hr />
+            <h3>{LocaleManager.GetString("general.screen")}</h3>
+            <Button onClick={this.toggle43}>{LocaleManager.GetString("general." + (this.state.aspectRatio ? "disable" : "enable"))}&nbsp;4:3</Button>
             <hr />
             <h3>{LocaleManager.GetString("general.language")}</h3>
             <select class="form-select mb-3 mt-3" ref={this.lang}>
